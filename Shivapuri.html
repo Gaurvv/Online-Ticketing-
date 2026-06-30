@@ -1,30 +1,472 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shivapuri Nagarjun National Park | ParkScape</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+      :root {
+        --forest-dark: #00853c;
+        --forest: #00853c;
+        --forest-light: #5b8a5a;
+        --sand: #f4f1e8;
+        --gold: #c8973a;
+        --text-dark: #1f2a22;
+        --muted: #6b7568;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--sand);
+        color: var(--text-dark);
+      }
+      h1,
+      h2,
+      h3,
+      .brand {
+        font-family: "Playfair Display", serif;
+      }
 
-        iframe{
-            width:100%;
-            height:88px;
-            border:none;
-            display:block;
+      iframe.nav-frame {
+        width: 100%;
+        height: 88px;
+        border: none;
+        display: block;
+      }
+
+      /* Hero */
+      .park-hero {
+        position: relative;
+        height: 65vh;
+        min-height: 420px;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(15, 30, 18, 0.35) 0%,
+            rgba(15, 30, 18, 0.8) 100%
+          ),
+          url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80")
+            center/cover no-repeat;
+        display: flex;
+        align-items: flex-end;
+        color: #fff;
+      }
+      .park-hero .container {
+        padding-bottom: 48px;
+      }
+      .park-hero .badge-continent {
+        background: rgba(72, 255, 157, 0.85);
+        color: #fff;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        display: inline-block;
+        margin-bottom: 14px;
+      }
+      .park-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        text-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+        margin-bottom: 10px;
+      }
+      .park-hero .loc {
+        font-size: 1.05rem;
+        color: #eef0e8;
+        margin-bottom: 14px;
+      }
+      .park-hero .loc i {
+        color: var(--gold);
+        margin-right: 6px;
+      }
+      .park-hero p.desc {
+        font-size: 1.05rem;
+        max-width: 680px;
+        color: #eef0e8;
+      }
+
+      /* Section heading */
+      .section-title {
+        font-weight: 700;
+        color: var(--forest-dark);
+        margin-bottom: 6px;
+      }
+      .section-sub {
+        color: var(--muted);
+        margin-bottom: 36px;
+      }
+
+      /* Ticket Booking section */
+      .ticket-section {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 18px rgba(28, 56, 41, 0.08);
+        border: 1px solid #ece9dd;
+        padding: 32px;
+        margin-top: -60px;
+        position: relative;
+        z-index: 5;
+      }
+      .ticket-info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .ticket-info-item .icon-circle {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        border-radius: 50%;
+        background: rgba(0, 133, 60, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .ticket-info-item .icon-circle i {
+        color: var(--forest);
+        font-size: 1.1rem;
+      }
+      .ticket-info-item .label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 2px;
+      }
+      .ticket-info-item .value {
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--text-dark);
+      }
+      .btn-gold {
+        background: var(--gold);
+        border: none;
+        color: #fff;
+        padding: 13px 34px;
+        font-weight: 600;
+        border-radius: 30px;
+        transition: 0.25s;
+        font-size: 1rem;
+      }
+      .btn-gold:hover {
+        background: #b3812f;
+        color: #fff;
+        transform: translateY(-2px);
+      }
+
+      /* Activity Card (same theme as park-card) */
+      .activity-card {
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(28, 56, 41, 0.08);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        height: 100%;
+        border: 1px solid #ece9dd;
+      }
+      .activity-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 34px rgba(83, 176, 126, 0.18);
+      }
+      .activity-img-wrap {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+      }
+      .activity-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .activity-card:hover .activity-img-wrap img {
+        transform: scale(1.08);
+      }
+      .activity-body {
+        padding: 18px 18px 20px;
+      }
+      .activity-title {
+        font-weight: 700;
+        font-size: 1.02rem;
+        margin-bottom: 6px;
+        color: var(--text-dark);
+      }
+      .activity-desc {
+        font-size: 0.86rem;
+        color: #4f5750;
+        min-height: 58px;
+        margin-bottom: 16px;
+      }
+      .btn-book-now {
+        background: transparent;
+        border: 1.5px solid var(--forest);
+        color: var(--forest);
+        font-weight: 600;
+        font-size: 0.82rem;
+        padding: 8px 16px;
+        border-radius: 24px;
+        transition: 0.2s;
+        width: 100%;
+      }
+      .btn-book-now:hover {
+        background: var(--forest);
+        color: #fff;
+      }
+
+      /* Book Ticket CTA button under cards */
+      .btn-explore {
+        background: transparent;
+        border: 1.5px solid var(--forest);
+        color: var(--forest);
+        font-weight: 600;
+        font-size: 0.82rem;
+        padding: 7px 16px;
+        border-radius: 24px;
+        transition: 0.2s;
+      }
+      .btn-explore:hover {
+        background: var(--forest);
+        color: #fff;
+      }
+
+      /* Booking popup modal */
+      .modal-content {
+        border-radius: 20px;
+        overflow: hidden;
+        border: none;
+      }
+      .modal-header.booking-header {
+        background: var(--forest-dark);
+        color: #fff;
+        border-bottom: none;
+        padding: 24px 28px;
+      }
+      .modal-header.booking-header .modal-title {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+      }
+      .modal-header.booking-header .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+      }
+      .modal-body.booking-body {
+        padding: 28px;
+      }
+      .modal-body.booking-form-body {
+        padding: 0;
+      }
+      .booking-form-frame {
+        width: 100%;
+        height: 520px;
+        border: none;
+        display: block;
+      }
+      .booking-park-name {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text-dark);
+        margin-bottom: 4px;
+      }
+      .booking-park-loc {
+        color: var(--muted);
+        font-size: 0.88rem;
+        margin-bottom: 20px;
+      }
+      .booking-park-loc i {
+        color: var(--forest-light);
+        margin-right: 5px;
+      }
+      .booking-price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--sand);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 22px;
+      }
+      .booking-price-row .label {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .booking-price-row .price {
+        font-weight: 800;
+        font-size: 1.3rem;
+        color: var(--forest-dark);
+        font-family: "Playfair Display", serif;
+      }
+      .modal-footer.booking-footer {
+        border-top: none;
+        padding: 0 28px 28px;
+      }
+      .btn-continue {
+        background: var(--gold);
+        border: none;
+        color: #fff;
+        padding: 12px 28px;
+        font-weight: 600;
+        border-radius: 30px;
+        width: 100%;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        transition: 0.2s;
+      }
+      .btn-continue:hover {
+        background: #b3812f;
+        color: #fff;
+      }
+
+      @media (max-width: 767px) {
+        .park-hero h1 {
+          font-size: 1.9rem;
         }
+        .ticket-section {
+          margin-top: -30px;
+          padding: 22px;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <iframe
+      class="nav-frame"
+      src="NavBar.html"
+      title="Navbar"
+      scrolling="no"
+    ></iframe>
 
-    <iframe src="NavBar.html" title="Navbar" scrolling="no"></iframe>
+    <!-- Park Hero -->
+    <section class="park-hero">
+      <div class="container">
+        <h1>Shivapuri Nagarjun National Park</h1>
+        <div class="loc">
+          <i class="fa-solid fa-location-dot"></i>Kathmandu Valley, Nepal
+        </div>
+        <p class="desc">
+          A lush mountain sanctuary just north of Kathmandu, home to dense
+          forests, the sacred Bagmati River source, leopards, langurs, and over
+          300 species of birds.
+        </p>
+      </div>
+    </section>
 
-    <h1>This is park 1</h1>
+    <div class="container">
+      <!-- Activities -->
+      <div class="text-center mt-5" id="activities">
+        <h2 class="section-title">Book Tickets</h2>
+        <p class="section-sub">
+          Book Tickets to experience Top activities at Shivapuri Nagarjun
+        </p>
+      </div>
 
-</body>
+      <div class="row g-4 pb-3" id="activityContainer"></div>
+
+      <!-- <div class="text-center mt-2 mb-5">
+    <button type="button" class="btn btn-gold" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
+      <i class="fa-solid fa-ticket me-2"></i>Book Ticket
+    </button>
+  </div> -->
+    </div>
+
+    <!-- Book Ticket Popup -->
+    <div
+      class="modal fade"
+      id="bookTicketModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header booking-header">
+            <h5 class="modal-title">
+              Book Your Visit – Shivapuri Nagarjun National Park
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body booking-form-body">
+            <!-- Booking form is rendered here from a separate file -->
+            <iframe
+              class="booking-form-frame"
+              src="ShivapuriForm.html"
+              title="Booking Form"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const activities = [
+        {
+          name: "Forest Hiking Trails",
+          desc: "Trek through dense subtropical and pine forests across well-marked trails suited for all skill levels.",
+          img: "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          name: "Bird Watching",
+          desc: "Spot over 300 bird species including Himalayan eagles, sunbirds, and forktails along the river trails.",
+          img: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          name: "Wildlife Spotting",
+          desc: "Look out for leopards, Himalayan black bears, langurs, and barking deer in their natural habitat.",
+          img: "https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          name: "Bagmati Source Visit",
+          desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
+          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
+        },
+      ];
+
+      const activityContainer = document.getElementById("activityContainer");
+
+      activityContainer.innerHTML = activities
+        .map(
+          (act) => `
+  <div class="col-lg-3 col-md-6">
+    <div class="activity-card">
+      <div class="activity-img-wrap">
+        <img src="${act.img}" alt="${act.name}" loading="lazy">
+      </div>
+      <div class="activity-body">
+        <div class="activity-title">${act.name}</div>
+        <div class="activity-desc">${act.desc}</div>
+        <button type="button" class="btn btn-book-now" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </div>
+`,
+        )
+        .join("");
+    </script>
+  </body>
 </html>
