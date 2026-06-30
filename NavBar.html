@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navbar</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest-dark:#00853C;
+    --gold:#c8973a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+  }
+  .brand{font-family:'Playfair Display',serif;}
+
+  .navbar-custom{
+    background:var(--forest-dark);
+    padding:16px 0;
+  }
+  .navbar-custom .brand{
+    color:#fff;
+    font-weight:700;
+    font-size:1.5rem;
+    letter-spacing:.5px;
+  }
+  .navbar-custom .nav-link{
+    color:#e6e6e0 !important;
+    font-weight:500;
+    margin:0 6px;
+  }
+  .navbar-custom .nav-link:hover{color:var(--gold) !important;}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+  <div class="container">
+    <a class="navbar-brand brand" href="#">
+      <img src="LOGO_URL_HERE" alt="ParkScape"  href="Home.html" style="height:36px; width:auto; display:block;">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" style="border-color:#5b8a5a;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="Home.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#stats">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#footer">Support</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
