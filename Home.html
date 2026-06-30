@@ -1,11 +1,547 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Ticketing</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National Parks Explorer</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest-dark:#1c3829;
+    --forest:#2f5d3a;
+    --forest-light:#5b8a5a;
+    --sand:#f4f1e8;
+    --gold:#c8973a;
+    --text-dark:#1f2a22;
+    --muted:#6b7568;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--sand);
+    color:var(--text-dark);
+    margin:0;
+  }
+  h1,h2,h3,.brand{font-family:'Playfair Display',serif;}
+
+  /* Navbar */
+  .navbar-custom{
+    background:var(--forest-dark);
+    padding:16px 0;
+  }
+  .navbar-custom .brand{
+    color:#fff;
+    font-weight:700;
+    font-size:1.5rem;
+    letter-spacing:.5px;
+  }
+  .navbar-custom .brand i{color:var(--gold); margin-right:8px;}
+  .navbar-custom .nav-link{
+    color:#e6e6e0 !important;
+    font-weight:500;
+    margin:0 6px;
+  }
+  .navbar-custom .nav-link:hover{color:var(--gold) !important;}
+
+  /* Hero */
+  .hero{
+    position:relative;
+    height:65vh;
+    min-height:420px;
+    background:
+      linear-gradient(180deg, rgba(15,30,18,.35) 0%, rgba(15,30,18,.75) 100%),
+      url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#fff;
+  }
+  .hero h1{
+    font-size:3.2rem;
+    font-weight:800;
+    text-shadow:0 4px 18px rgba(0,0,0,.4);
+  }
+  .hero p{
+    font-size:1.15rem;
+    max-width:640px;
+    margin:14px auto 28px;
+    color:#eef0e8;
+  }
+  .btn-gold{
+    background:var(--gold);
+    border:none;
+    color:#fff;
+    padding:12px 30px;
+    font-weight:600;
+    border-radius:30px;
+    transition:.25s;
+  }
+  .btn-gold:hover{background:#b3812f; color:#fff; transform:translateY(-2px);}
+
+  /* Search/Filter Bar */
+  .filter-bar{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    padding:18px 22px;
+    margin-top:-48px;
+    position:relative;
+    z-index:5;
+  }
+  .filter-bar .form-control, .filter-bar .form-select{
+    border-radius:10px;
+    border:1px solid #e0ded3;
+    padding:10px 14px;
+  }
+  .filter-bar .form-control:focus, .filter-bar .form-select:focus{
+    border-color:var(--forest-light);
+    box-shadow:0 0 0 .2rem rgba(91,138,90,.18);
+  }
+
+  /* Section heading */
+  .section-title{
+    font-weight:700;
+    color:var(--forest-dark);
+    margin-bottom:6px;
+  }
+  .section-sub{
+    color:var(--muted);
+    margin-bottom:36px;
+  }
+
+  /* Park Card */
+  .park-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 6px 18px rgba(28,56,41,.08);
+    transition:transform .3s ease, box-shadow .3s ease;
+    height:100%;
+    border:1px solid #ece9dd;
+  }
+  .park-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 16px 34px rgba(28,56,41,.18);
+  }
+  .park-img-wrap{
+    position:relative;
+    height:230px;
+    overflow:hidden;
+  }
+  .park-img-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform .5s ease;
+  }
+  .park-card:hover .park-img-wrap img{transform:scale(1.08);}
+  .park-badge{
+    position:absolute;
+    top:14px;
+    left:14px;
+    background:rgba(28,56,41,.85);
+    color:#fff;
+    padding:5px 14px;
+    border-radius:20px;
+    font-size:.78rem;
+    font-weight:600;
+    letter-spacing:.3px;
+  }
+  .park-fav{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:rgba(255,255,255,.9);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:.2s;
+    border:none;
+  }
+  .park-fav i{color:var(--muted); font-size:1rem;}
+  .park-fav.active i{color:#e0563e;}
+  .park-fav:hover{background:#fff;}
+  .park-body{padding:20px 22px 22px;}
+  .park-title{
+    font-weight:700;
+    font-size:1.2rem;
+    margin-bottom:4px;
+    color:var(--text-dark);
+  }
+  .park-loc{
+    color:var(--muted);
+    font-size:.88rem;
+    margin-bottom:12px;
+  }
+  .park-loc i{color:var(--forest-light); margin-right:5px;}
+  .park-desc{
+    font-size:.92rem;
+    color:#4f5750;
+    margin-bottom:16px;
+    min-height:62px;
+  }
+  .park-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px solid #efece0;
+    padding-top:14px;
+  }
+  .park-rating{
+    color:var(--gold);
+    font-weight:600;
+    font-size:.92rem;
+  }
+  .park-rating i{margin-right:3px;}
+  .btn-explore{
+    background:transparent;
+    border:1.5px solid var(--forest);
+    color:var(--forest);
+    font-weight:600;
+    font-size:.85rem;
+    padding:7px 18px;
+    border-radius:24px;
+    transition:.2s;
+  }
+  .btn-explore:hover{background:var(--forest); color:#fff;}
+
+  /* Stats */
+  .stats-section{
+    background:var(--forest-dark);
+    color:#fff;
+    padding:60px 0;
+    margin-top:80px;
+  }
+  .stat-num{
+    font-size:2.6rem;
+    font-weight:800;
+    color:var(--gold);
+    font-family:'Playfair Display',serif;
+  }
+  .stat-label{color:#cdd6c8; font-size:.95rem;}
+
+  footer{
+    background:#142318;
+    color:#aab4a4;
+    padding:36px 0 18px;
+    font-size:.9rem;
+  }
+  footer a{color:#cdd6c8; text-decoration:none;}
+  footer a:hover{color:var(--gold);}
+  .footer-brand{color:#fff; font-weight:700; font-family:'Playfair Display',serif; font-size:1.3rem;}
+
+  .empty-state{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+    display:none;
+  }
+  .empty-state i{font-size:2.5rem; color:var(--forest-light); margin-bottom:14px;}
+
+  /* Modal */
+  .modal-content{border-radius:18px; overflow:hidden; border:none;}
+  .modal-header{border-bottom:none;}
+  .modal-img{width:100%; height:300px; object-fit:cover;}
+
+  @media (max-width:767px){
+    .hero h1{font-size:2.1rem;}
+    .filter-bar{margin-top:18px;}
+  }
+</style>
 </head>
 <body>
-    
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container">
+    <a class="navbar-brand brand" href="#"><i class="fa-solid fa-mountain-sun"></i>ParkScape</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" style="border-color:#5b8a5a;">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#parks">Parks</a></li>
+        <li class="nav-item"><a class="nav-link" href="#stats">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#footer">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <h1>Discover the World's Greatest National Parks</h1>
+    <p>Explore breathtaking landscapes, diverse wildlife, and unforgettable adventures across the globe's most stunning protected wilderness.</p>
+    <a href="#parks" class="btn btn-gold"><i class="fa-solid fa-compass me-2"></i>Explore Parks</a>
+  </div>
+</section>
+
+<div class="container">
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <div class="row g-2 align-items-center">
+      <div class="col-md-5">
+        <div class="input-group">
+          <span class="input-group-text bg-white border-0"><i class="fa-solid fa-magnifying-glass" style="color:var(--forest-light)"></i></span>
+          <input type="text" id="searchInput" class="form-control border-0" placeholder="Search parks by name or location...">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <select id="continentFilter" class="form-select">
+          <option value="all">All Continents</option>
+          <option value="Africa">Africa</option>
+          <option value="Asia">Asia</option>
+          <option value="North America">North America</option>
+          <option value="South America">South America</option>
+          <option value="Europe">Europe</option>
+          <option value="Oceania">Oceania</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <select id="sortFilter" class="form-select">
+          <option value="default">Sort by: Featured</option>
+          <option value="name">Name (A–Z)</option>
+          <option value="rating">Rating (High–Low)</option>
+        </select>
+      </div>
+      <div class="col-md-1 text-md-end text-center">
+        <span class="badge rounded-pill" style="background:var(--forest); padding:9px 14px;" id="resultCount">12</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section heading -->
+  <div class="text-center mt-5" id="parks">
+    <h2 class="section-title">Featured National Parks</h2>
+    <p class="section-sub">Hand-picked destinations for every kind of explorer</p>
+  </div>
+
+  <!-- Park Cards -->
+  <div class="row g-4 pb-3" id="parkContainer"></div>
+
+  <div class="empty-state" id="emptyState">
+    <i class="fa-solid fa-tree-city"></i>
+    <h5>No parks match your search</h5>
+    <p>Try adjusting your filters or search term.</p>
+  </div>
+</div>
+
+<!-- Stats -->
+<section class="stats-section" id="stats">
+  <div class="container">
+    <div class="row text-center g-4">
+      <div class="col-6 col-md-3">
+        <div class="stat-num" data-count="63">0</div>
+        <div class="stat-label">Parks Listed</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-num" data-count="48">0</div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-num" data-count="120">0</div>
+        <div class="stat-label">Wildlife Species</div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="stat-num" data-count="2500">0</div>
+        <div class="stat-label">Happy Visitors (k)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-md-4">
+        <div class="footer-brand mb-2"><i class="fa-solid fa-mountain-sun me-2" style="color:var(--gold);"></i>ParkScape</div>
+        <p>Your trusted guide to the planet's most beautiful national parks and protected wilderness areas.</p>
+      </div>
+      <div class="col-md-4">
+        <h6 class="text-white mb-3">Quick Links</h6>
+        <p><a href="#parks">Browse Parks</a></p>
+        <p><a href="#stats">About Us</a></p>
+        <p><a href="#">Travel Guides</a></p>
+      </div>
+      <div class="col-md-4">
+        <h6 class="text-white mb-3">Stay Connected</h6>
+        <p><i class="fa-solid fa-envelope me-2"></i>hello@parkscape.com</p>
+        <div class="d-flex gap-3 mt-2">
+          <a href="#"><i class="fa-brands fa-facebook fa-lg"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram fa-lg"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter fa-lg"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr style="border-color:#2a3a2c; margin:28px 0 16px;">
+    <div class="text-center" style="font-size:.85rem;">&copy; 2026 ParkScape. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Park Detail Modal -->
+<div class="modal fade" id="parkModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <img id="modalImg" class="modal-img" src="" alt="">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modalTitle"></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted mb-2"><i class="fa-solid fa-location-dot me-2"></i><span id="modalLoc"></span></p>
+        <p id="modalDesc"></p>
+        <div class="d-flex align-items-center gap-3 mt-3">
+          <span class="park-rating"><i class="fa-solid fa-star"></i><span id="modalRating"></span></span>
+          <span class="badge" style="background:var(--forest);" id="modalContinent"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script>
+const parks = [
+  {name:"Yellowstone National Park", location:"Wyoming, USA", continent:"North America", rating:4.9, desc:"Home to geysers, hot springs, and abundant wildlife including bison, wolves, and bears.", img:"https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=800&q=80"},
+  {name:"Serengeti National Park", location:"Tanzania", continent:"Africa", rating:4.8, desc:"Famous for the Great Migration of wildebeest and zebras across vast savanna plains.", img:"https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80"},
+  {name:"Banff National Park", location:"Alberta, Canada", continent:"North America", rating:4.9, desc:"Turquoise lakes, glaciers, and dramatic mountain peaks in the Canadian Rockies.", img:"https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=800&q=80"},
+  {name:"Torres del Paine", location:"Patagonia, Chile", continent:"South America", rating:4.8, desc:"Iconic granite towers, glaciers, and pristine lakes in Chilean Patagonia.", img:"https://images.unsplash.com/photo-1518182170546-07661fd94144?auto=format&fit=crop&w=800&q=80"},
+  {name:"Plitvice Lakes", location:"Croatia", continent:"Europe", rating:4.7, desc:"A cascading series of terraced lakes joined by waterfalls amid lush forest.", img:"https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80"},
+  {name:"Kruger National Park", location:"South Africa", continent:"Africa", rating:4.7, desc:"One of Africa's largest game reserves, home to the Big Five.", img:"https://images.unsplash.com/photo-1535941339077-2dd1c7963098?auto=format&fit=crop&w=800&q=80"},
+  {name:"Fiordland National Park", location:"New Zealand", continent:"Oceania", rating:4.8, desc:"Dramatic fjords, waterfalls, and rainforest in New Zealand's wild southwest.", img:"https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80"},
+  {name:"Zhangjiajie National Forest", location:"Hunan, China", continent:"Asia", rating:4.6, desc:"Towering sandstone pillars that inspired the floating mountains of Pandora.", img:"https://images.unsplash.com/photo-1537905569824-f89f14cceb68?auto=format&fit=crop&w=800&q=80"},
+  {name:"Yosemite National Park", location:"California, USA", continent:"North America", rating:4.9, desc:"Granite cliffs, giant sequoias, and waterfalls in the Sierra Nevada.", img:"https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80"},
+  {name:"Iguazu National Park", location:"Argentina/Brazil", continent:"South America", rating:4.9, desc:"One of the largest and most spectacular waterfall systems on Earth.", img:"https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80"},
+  {name:"Sagarmatha National Park", location:"Nepal", continent:"Asia", rating:4.8, desc:"Home to Mount Everest and stunning Himalayan peaks and glaciers.", img:"https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80"},
+  {name:"Lake District National Park", location:"England, UK", continent:"Europe", rating:4.5, desc:"Rolling hills, glacial lakes, and charming villages in northern England.", img:"https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80"}
+];
+
+const container = document.getElementById('parkContainer');
+const searchInput = document.getElementById('searchInput');
+const continentFilter = document.getElementById('continentFilter');
+const sortFilter = document.getElementById('sortFilter');
+const resultCount = document.getElementById('resultCount');
+const emptyState = document.getElementById('emptyState');
+const favorites = new Set();
+
+function renderParks(list){
+  container.innerHTML = '';
+  if(list.length === 0){
+    emptyState.style.display = 'block';
+  } else {
+    emptyState.style.display = 'none';
+  }
+  list.forEach((park, idx) => {
+    const favActive = favorites.has(park.name) ? 'active' : '';
+    const col = document.createElement('div');
+    col.className = 'col-lg-4 col-md-6';
+    col.innerHTML = `
+      <div class="park-card">
+        <div class="park-img-wrap">
+          <img src="${park.img}" alt="${park.name}" loading="lazy">
+          <span class="park-badge">${park.continent}</span>
+          <button class="park-fav ${favActive}" data-name="${park.name}"><i class="fa-solid fa-heart"></i></button>
+        </div>
+        <div class="park-body">
+          <div class="park-title">${park.name}</div>
+          <div class="park-loc"><i class="fa-solid fa-location-dot"></i>${park.location}</div>
+          <div class="park-desc">${park.desc}</div>
+          <div class="park-meta">
+            <span class="park-rating"><i class="fa-solid fa-star"></i>${park.rating}</span>
+            <button class="btn btn-explore" data-name="${park.name}">View Details</button>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(col);
+  });
+  resultCount.textContent = list.length;
+
+  document.querySelectorAll('.park-fav').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const name = btn.dataset.name;
+      if(favorites.has(name)){ favorites.delete(name); btn.classList.remove('active'); }
+      else { favorites.add(name); btn.classList.add('active'); }
+    });
+  });
+
+  document.querySelectorAll('.btn-explore').forEach(btn => {
+    btn.addEventListener('click', () => openModal(btn.dataset.name));
+  });
+}
+
+function openModal(name){
+  const park = parks.find(p => p.name === name);
+  if(!park) return;
+  document.getElementById('modalImg').src = park.img;
+  document.getElementById('modalTitle').textContent = park.name;
+  document.getElementById('modalLoc').textContent = park.location;
+  document.getElementById('modalDesc').textContent = park.desc;
+  document.getElementById('modalRating').textContent = ' ' + park.rating;
+  document.getElementById('modalContinent').textContent = park.continent;
+  new bootstrap.Modal(document.getElementById('parkModal')).show();
+}
+
+function applyFilters(){
+  let result = [...parks];
+  const term = searchInput.value.trim().toLowerCase();
+  const continent = continentFilter.value;
+  const sort = sortFilter.value;
+
+  if(term){
+    result = result.filter(p => p.name.toLowerCase().includes(term) || p.location.toLowerCase().includes(term));
+  }
+  if(continent !== 'all'){
+    result = result.filter(p => p.continent === continent);
+  }
+  if(sort === 'name'){
+    result.sort((a,b) => a.name.localeCompare(b.name));
+  } else if(sort === 'rating'){
+    result.sort((a,b) => b.rating - a.rating);
+  }
+  renderParks(result);
+}
+
+searchInput.addEventListener('input', applyFilters);
+continentFilter.addEventListener('change', applyFilters);
+sortFilter.addEventListener('change', applyFilters);
+
+renderParks(parks);
+
+// Animated stat counters
+const statEls = document.querySelectorAll('.stat-num');
+let counted = false;
+function animateStats(){
+  if(counted) return;
+  const statsSection = document.getElementById('stats');
+  const rect = statsSection.getBoundingClientRect();
+  if(rect.top < window.innerHeight - 100){
+    counted = true;
+    statEls.forEach(el => {
+      const target = +el.dataset.count;
+      let current = 0;
+      const step = Math.max(1, Math.ceil(target/60));
+      const timer = setInterval(() => {
+        current += step;
+        if(current >= target){ current = target; clearInterval(timer); }
+        el.textContent = current.toLocaleString();
+      }, 20);
+    });
+  }
+}
+window.addEventListener('scroll', animateStats);
+animateStats();
+</script>
 </body>
 </html>
