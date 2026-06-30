@@ -226,23 +226,11 @@
 </head>
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
-  <div class="container">
-    <a class="navbar-brand brand" href="#"><i class="fa-solid fa-mountain-sun"></i>ParkScape</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" style="border-color:#5b8a5a;">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navMenu">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#stats">FAQ</a></li>
-        <li class="nav-item"><a class="nav-link" href="#footer">Support</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<!-- Navbar (loaded from NavBar.html) -->
+<iframe src="NavBar.html" title="Navbar" scrolling="no"
+  style="width:100%; border:0; display:block; height:88px;"
+  onload="this.style.height = (this.contentWindow.document.body.scrollHeight) + 'px';">
+</iframe>
 
 <!-- Hero -->
 <section class="hero">
@@ -278,7 +266,7 @@
       <div class="col-6 col-md-3">
         <div class="stat-num" data-count="120">0</div>
         <div class="stat-label">Wildlife Species</div>
-      </div>
+      </div>    
       <div class="col-6 col-md-3">
         <div class="stat-num" data-count="2500">0</div>
         <div class="stat-label">Happy Visitors (k)</div>
@@ -320,10 +308,10 @@
 <script>
 // Only 4 national parks, 4 per row (col-lg-3)
 const parks = [
-  {id:"yellowstone", name:"Yellowstone National Park",   location:"Wyoming, USA", continent:"North America",  desc:"Home to geysers, hot springs, and abundant wildlife including bison, wolves, and bears.", img:"https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=800&q=80"},
-  {id:"serengeti", name:"Serengeti National Park", location:"Tanzania", continent:"Africa",  desc:"Famous for the Great Migration of wildebeest and zebras across vast savanna plains.", img:"https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80"},
-  {id:"banff", name:"Banff National Park", location:"Alberta, Canada", continent:"North America",desc:"Turquoise lakes, glaciers, and dramatic mountain peaks in the Canadian Rockies.", img:"https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=800&q=80"},
-  {id:"torres-del-paine", name:"Torres del Paine", location:"Patagonia, Chile", continent:"South America", desc:"Iconic granite towers, glaciers, and pristine lakes in Chilean Patagonia.", img:"https://images.unsplash.com/photo-1518182170546-07661fd94144?auto=format&fit=crop&w=800&q=80"}
+  {id:"Park1.html", name:"Yellowstone National Park",  location:"Wyoming, USA", continent:"North America",  desc:"Home to geysers, hot springs, and abundant wildlife including bison, wolves, and bears.", img:"https://images.unsplash.com/photo-1533873984035-25970ab07461?auto=format&fit=crop&w=800&q=80"},
+  {id:"Park2.html", name:"Serengeti National Park", location:"Tanzania", continent:"Africa",  desc:"Famous for the Great Migration of wildebeest and zebras across vast savanna plains.", img:"https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80"},
+  {id:"Park3.html", name:"Banff National Park", location:"Alberta, Canada", continent:"North America",desc:"Turquoise lakes, glaciers, and dramatic mountain peaks in the Canadian Rockies.", img:"https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=800&q=80"},
+  {id:"Park4.html", name:"Torres del Paine", location:"Patagonia, Chile", continent:"South America", desc:"Iconic granite towers, glaciers, and pristine lakes in Chilean Patagonia.", img:"https://images.unsplash.com/photo-1518182170546-07661fd94144?auto=format&fit=crop&w=800&q=80"}
 ];
 
 const container = document.getElementById('parkContainer');
@@ -342,7 +330,7 @@ container.innerHTML = parks.map(park => `
         <div class="park-desc">${park.desc}</div>
         <div class="park-meta">
          
-          <a  class="btn btn-explore"   href="park-details.html?id=${park.id}">View Details</a>
+          <a  class="btn btn-explore"   href=${park.id}>View Details</a>
         </div>
       </div>
     </div>
