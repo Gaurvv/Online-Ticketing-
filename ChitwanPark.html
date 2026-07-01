@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chitwan national Park</title>
+    <title>Shivapuri Nagarjun National Park | ParkScape</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css"
       rel="stylesheet"
@@ -67,7 +67,7 @@
             rgba(15, 30, 18, 0.35) 0%,
             rgba(15, 30, 18, 0.8) 100%
           ),
-          url("https://images.openai.com/static-rsc-4/l2MJRL8TrZMhdJj2bZUp5e-Nwek4VXcW1MiKrn97adB62Sfdp3RYRiudy27ycLEBZgen3F0yYxPgTDXy-rLW6Ybru0CMZMbrdx7kPOUpCXLDGv4hQ0vpXJAJ1stg-tR8PikRVAUZgHn8jfg8i3rxVOoGjBf2jvfx4j3wKnoyPBYn8sLRUg6i-mr7jnl6FmoR?purpose=fullsize")
+          url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-a8xalvMCIeNRT-sIseU4lDap_mJZuOS-UBcdPG8brA&s=10")
             center/cover no-repeat;
         display: flex;
         align-items: flex-end;
@@ -364,12 +364,12 @@
     <!-- Park Hero -->
     <section class="park-hero">
       <div class="container">
-        <h1>Chitwan national Park</h1>
+        <h1>Chitwan National Park</h1>
         <div class="loc">
-          <i class="fa-solid fa-location-dot"></i>Chitwan District, Nepal
+          <i class="fa-solid fa-location-dot"></i>Chitwan, Nepal
         </div>
         <p class="desc">
-        Famous for wildlife, jungle safaris, and one-horned rhinos.
+       A UNESCO World Heritage Site in southern Nepal, famous for its rich wildlife, dense forests, grasslands, and exciting jungle safaris.
         </p>
       </div>
     </section>
@@ -379,17 +379,11 @@
       <div class="text-center mt-5" id="activities">
         <h2 class="section-title">Book Tickets</h2>
         <p class="section-sub">
-          Book Tickets to experience Top activities at Shivapuri Nagarjun
+          Book Tickets to experience Top activities at Chitwan National Park
         </p>
       </div>
 
       <div class="row g-4 pb-3" id="activityContainer"></div>
-
-      <!-- <div class="text-center mt-2 mb-5">
-    <button type="button" class="btn btn-gold" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
-      <i class="fa-solid fa-ticket me-2"></i>Book Ticket
-    </button>
-  </div> -->
     </div>
 
     <!-- Book Ticket Popup -->
@@ -403,7 +397,7 @@
         <div class="modal-content">
           <div class="modal-header booking-header">
             <h5 class="modal-title">
-              Book Your Visit – Shivapuri Nagarjun National Park
+              Book Your Visit – Chitwan National Park
             </h5>
             <button
               type="button"
@@ -423,7 +417,7 @@
       </div>
     </div>
 
-<!-- Footer -->
+  <!-- Footer -->
 <iframe
     src="Footer.html"
     title="Footer"
@@ -433,13 +427,15 @@
         height:90px;
         border:none;
         display:block;
+          margin-top: 50px;
         background:#00853C;
     ">
-</iframe>
-
+</iframe>  
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script>
+      const PARK_NAME = "Chitwan National Park";
+
       const activities = [
         {
           name: "Jungle Safari",
@@ -476,31 +472,42 @@
           // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
           img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
         },
-        
       ];
 
       const activityContainer = document.getElementById("activityContainer");
 
       activityContainer.innerHTML = activities
-        .map(
-          (act) => `
-  <div class="col-lg-3 col-md-6">
-    <div class="activity-card">
-      <div class="activity-img-wrap">
-        <img src="${act.img}" alt="${act.name}" loading="lazy">
-      </div>
-      <div class="activity-body">
-        <div class="activity-title">${act.name}</div>
-       
-        <button type="button" class="btn btn-book-now" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
-          Book Now
-        </button>
-      </div>
+  .map(
+    (act) => `
+<div class="col-lg-3 col-md-6">
+  <div class="activity-card">
+    <div class="activity-img-wrap">
+      <img src="${act.img}" alt="${act.name}" loading="lazy">
+    </div>
+    <div class="activity-body">
+      <div class="activity-title">${act.name}</div>
+      <button type="button" class="btn btn-book-now" data-bs-toggle="modal" data-bs-target="#bookTicketModal" data-activity="${act.name}">
+        Book Now
+      </button>
     </div>
   </div>
+</div>
 `,
-        )
-        .join("");
+  )
+  .join("");
+
+      // Pass which activity was clicked into the single shared booking form
+      const bookTicketModal = document.getElementById("bookTicketModal");
+      const bookingFrame = bookTicketModal.querySelector(".booking-form-frame");
+
+      bookTicketModal.addEventListener("show.bs.modal", (event) => {
+        const triggerBtn = event.relatedTarget;
+        const activity = triggerBtn
+          ? triggerBtn.getAttribute("data-activity")
+          : "General Entry";
+        const params = new URLSearchParams({ park: PARK_NAME, activity: activity });
+        bookingFrame.src = `ShivapuriForm.html?${params.toString()}`;
+      });
     </script>
   </body>
 </html>
