@@ -31,11 +31,12 @@
         margin: 0;
         padding: 0;
       }
-      body {
-        font-family: "Inter", sans-serif;
-        background: var(--sand);
-        color: var(--text-dark);
-      }
+     body{
+    font-family:"Inter",sans-serif;
+    background:var(--sand);
+    color:var(--text-dark);
+    padding-top:88px;
+}
       h1,
       h2,
       h3,
@@ -43,12 +44,17 @@
         font-family: "Playfair Display", serif;
       }
 
-      iframe.nav-frame {
-        width: 100%;
-        height: 88px;
-        border: none;
-        display: block;
-      }
+    iframe.nav-frame{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 88px;
+    border: none;
+    display: block;
+    z-index: 9999;
+    background: #00853C;
+}
 
       /* Hero */
       .park-hero {
@@ -61,7 +67,7 @@
             rgba(15, 30, 18, 0.35) 0%,
             rgba(15, 30, 18, 0.8) 100%
           ),
-          url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1600&q=80")
+          url("https://snnp.gov.np/media/gallery/1c19b202-7cbe-4e1f-b681-bbcbac008832.jpg")
             center/cover no-repeat;
         display: flex;
         align-items: flex-end;
@@ -363,9 +369,7 @@
           <i class="fa-solid fa-location-dot"></i>Kathmandu Valley, Nepal
         </div>
         <p class="desc">
-          A lush mountain sanctuary just north of Kathmandu, home to dense
-          forests, the sacred Bagmati River source, leopards, langurs, and over
-          300 species of birds.
+        A beautiful forest area near Kathmandu, known for its wildlife, hiking trails, and the source of the Bagmati River.
         </p>
       </div>
     </section>
@@ -410,11 +414,10 @@
           </div>
           <div class="modal-body booking-form-body">
             <!-- Booking form is rendered here from a separate file -->
-            <iframe
-              class="booking-form-frame"
-              src="ShivapuriForm.html"
-              title="Booking Form"
-            ></iframe>
+       <iframe
+    class="booking-form-frame"
+    src="BookingForm.html"
+></iframe>
           </div>
         </div>
       </div>
@@ -425,22 +428,22 @@
       const activities = [
         {
           name: "Forest Hiking Trails",
-          desc: "Trek through dense subtropical and pine forests across well-marked trails suited for all skill levels.",
+          // desc: "Trek through dense subtropical and pine forests across well-marked trails suited for all skill levels.",
           img: "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Bird Watching",
-          desc: "Spot over 300 bird species including Himalayan eagles, sunbirds, and forktails along the river trails.",
+          // desc: "Spot over 300 bird species including Himalayan eagles, sunbirds, and forktails along the river trails.",
           img: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Wildlife Spotting",
-          desc: "Look out for leopards, Himalayan black bears, langurs, and barking deer in their natural habitat.",
+          // desc: "Look out for leopards, Himalayan black bears, langurs, and barking deer in their natural habitat.",
           img: "https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=800&q=80",
         },
         {
           name: "Bagmati Source Visit",
-          desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
+          // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
           img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
         },
       ];
@@ -457,7 +460,7 @@
       </div>
       <div class="activity-body">
         <div class="activity-title">${act.name}</div>
-        <div class="activity-desc">${act.desc}</div>
+       
         <button type="button" class="btn btn-book-now" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
           Book Now
         </button>

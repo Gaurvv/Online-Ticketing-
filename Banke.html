@@ -1,30 +1,932 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Banke National Park | ParkScape</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-        }
+      :root {
+        --forest-dark: #00853c;
+        --forest: #00853c;
+        --forest-light: #5b8a5a;
+        --sand: #f4f1e8;
+        --gold: #c8973a;
+        --text-dark: #1f2a22;
+        --muted: #6b7568;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html, body {
+        height: 100%;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background: var(--sand);
+        color: var(--text-dark);
+        display: flex;
+        flex-direction: column;
+      }
 
-        iframe{
-            width:100%;
-            height:88px;
-            border:none;
-            display:block;
+      iframe.nav-frame {
+        width: 100%;
+        height: 88px;
+        border: none;
+        display: block;
+        flex: 0 0 auto;
+        position: relative;
+        z-index: 10;
+      }
+
+      /* Hero */
+      .park-hero {
+        position: relative;
+        height: 65vh;
+        min-height: 420px;
+        width: 100%;
+        background-image:
+          linear-gradient(
+            180deg,
+            rgba(15, 30, 18, 0.05) 0%,
+            rgba(15, 30, 18, 0.15) 45%,
+            rgba(15, 30, 18, 0.82) 100%
+          ),
+          url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Bardiya_National_Park.jpg/1280px-Bardiya_National_Park.jpg");
+        background-size: cover;
+        background-position: center 40%;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: flex-end;
+        color: #fff;
+        z-index: 1;
+      }
+      .park-hero .container {
+        padding-bottom: 48px;
+      }
+      .park-hero h1 {
+        font-size: 2.8rem;
+        font-weight: 800;
+        text-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+        margin-bottom: 10px;
+      }
+      .park-hero .loc {
+        font-size: 1.05rem;
+        color: #eef0e8;
+        margin-bottom: 14px;
+      }
+      .park-hero .loc i {
+        color: var(--gold);
+        margin-right: 6px;
+      }
+      .park-hero p.desc {
+        font-size: 1.05rem;
+        max-width: 680px;
+        color: #eef0e8;
+      }
+
+      /* Section heading */
+      .section-title {
+        font-weight: 700;
+        color: var(--forest-dark);
+        margin-bottom: 6px;
+      }
+      .section-sub {
+        color: var(--muted);
+        margin-bottom: 36px;
+      }
+
+      /* ===== Booking Configurator ===== */
+      .config-panel {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 6px 18px rgba(28, 56, 41, 0.08);
+        border: 1px solid #ece9dd;
+        padding: 26px 26px 24px;
+        height: 100%;
+      }
+      .config-panel .panel-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .config-panel .panel-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        border-radius: 12px;
+        background: rgba(0, 133, 60, 0.1);
+        color: var(--forest);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+      }
+      .config-panel .panel-title {
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--text-dark);
+      }
+      .config-panel .panel-sub {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+
+      .option-card {
+        position: relative;
+        border: 1.5px solid #e0ded3;
+        border-radius: 12px;
+        padding: 12px 14px;
+        cursor: pointer;
+        transition: 0.2s;
+        background: #fff;
+      }
+      .option-card:hover {
+        border-color: var(--forest-light);
+      }
+      .option-card input {
+        position: absolute;
+        opacity: 0;
+        inset: 0;
+        margin: 0;
+        cursor: pointer;
+      }
+      .option-card .opt-title {
+        font-weight: 600;
+        font-size: 0.92rem;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .option-card .opt-title i {
+        color: var(--forest);
+      }
+      .option-card .opt-price {
+        font-size: 0.8rem;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+      .option-card.selected {
+        border-color: var(--forest);
+        background: rgba(0, 133, 60, 0.06);
+        box-shadow: 0 0 0 1px var(--forest);
+      }
+      .option-card.selected .opt-title {
+        color: var(--forest-dark);
+      }
+      .option-card.selected::after {
+        content: "\f00c";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        top: 10px;
+        right: 12px;
+        color: var(--forest);
+        font-size: 0.78rem;
+      }
+
+      .qty-control {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--sand);
+        border-radius: 30px;
+        padding: 6px 8px;
+        width: fit-content;
+        transition: opacity 0.2s;
+      }
+      .qty-control.disabled {
+        opacity: 0.45;
+        pointer-events: none;
+      }
+      .qty-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        background: var(--forest);
+        color: #fff;
+        font-weight: 700;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .qty-btn:hover {
+        background: var(--forest-dark);
+      }
+      .qty-btn:disabled {
+        background: #c9d4cb;
+        cursor: not-allowed;
+      }
+      .qty-val {
+        min-width: 22px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 1rem;
+      }
+
+      .permit-check {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1.5px solid #e0ded3;
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .permit-check:hover {
+        border-color: var(--forest-light);
+      }
+      .permit-check.checked {
+        border-color: var(--gold);
+        background: rgba(200, 151, 58, 0.07);
+      }
+      .permit-check .pc-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .permit-check .pc-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+        border-radius: 50%;
+        background: rgba(200, 151, 58, 0.15);
+        color: var(--gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+      }
+      .permit-check .pc-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-dark);
+      }
+      .permit-check .pc-price {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+      .permit-check .form-check-input {
+        width: 1.15em;
+        height: 1.15em;
+        cursor: pointer;
+      }
+      .permit-check .pc-right {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .permit-qty {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--sand);
+        border-radius: 30px;
+        padding: 4px 6px;
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.95);
+        transition: 0.18s;
+      }
+      .permit-check.checked .permit-qty {
+        opacity: 1;
+        pointer-events: auto;
+        transform: scale(1);
+      }
+      .permit-qty-btn {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid #d6d2c4;
+        background: transparent;
+        color: var(--text-dark);
+        font-weight: 700;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: 0.2s;
+      }
+      .permit-qty-btn:hover {
+        background: #ece9dd;
+      }
+      .permit-qty-val {
+        min-width: 16px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.85rem;
+      }
+
+      .summary-panel {
+        background: linear-gradient(150deg, var(--forest-dark), #0c5f2c);
+        border-radius: 18px;
+        padding: 26px 24px;
+        color: #fff;
+        position: sticky;
+        top: 20px;
+      }
+      .summary-panel h5 {
+        font-weight: 700;
+        margin-bottom: 18px;
+      }
+      .summary-line {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.86rem;
+        color: #dcebe0;
+        padding: 7px 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.18);
+      }
+      .summary-line span.amt {
+        color: #fff;
+        font-weight: 600;
+      }
+      .summary-total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.25);
+      }
+      .summary-total-row .ttl-label {
+        font-size: 0.92rem;
+        color: #dcebe0;
+      }
+      .summary-total-row .ttl-amt {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--gold);
+      }
+      .btn-gold {
+        background: var(--gold);
+        border: none;
+        color: #fff;
+        padding: 13px 0;
+        font-weight: 700;
+        border-radius: 30px;
+        transition: 0.25s;
+        font-size: 1rem;
+        width: 100%;
+      }
+      .btn-gold:hover {
+        background: #b3812f;
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      .summary-empty-note {
+        font-size: 0.78rem;
+        color: #c3d6c8;
+        text-align: center;
+        margin-top: 10px;
+      }
+
+      footer {
+        background: #00853c;
+        color: #aab4a4;
+        padding: 36px 0 18px;
+        font-size: 0.9rem;
+        margin-top: 60px;
+      }
+      footer a {
+        color: #cdd6c8;
+        text-decoration: none;
+      }
+      footer a:hover {
+        color: var(--gold);
+      }
+
+      @media (max-width: 991px) {
+        .summary-panel {
+          position: static;
+          margin-top: 24px;
         }
+      }
+      @media (max-width: 767px) {
+        .park-hero h1 {
+          font-size: 1.9rem;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <iframe
+      class="nav-frame"
+      src="NavBar.html"
+      title="Navbar"
+      scrolling="no"
+    ></iframe>
 
-    <iframe src="NavBar.html" title="Navbar" scrolling="no"></iframe>
+    <!-- Park Hero -->
+    <section class="park-hero">
+      <div class="container">
+        <h1>Banke National Park</h1>
+        <div class="loc">
+          <i class="fa-solid fa-location-dot"></i>Lumbini Province, Nepal
+        </div>
+        <p class="desc">
+          Nepal's tenth national park and a key Tiger Conservation Unit, spanning 550 km²
+          of Terai Sal forests, Churia ranges and the floodplains of the Rapti and Babai
+          rivers — home to Bengal tigers, four-horned antelope, striped hyenas, gharial
+          crocodiles and over 250 species of birds.
+        </p>
+      </div>
+    </section>
 
-    <h1>This is park 3</h1>
+    <div class="container">
+      <!-- ===================== BOOKING CONFIGURATOR ===================== -->
+      <div class="text-center mt-5 mb-4">
+        <h2 class="section-title">Customize Your Visit</h2>
+        <p class="section-sub">
+          Choose your entry type, transport, nationality and activities — then review and confirm
+        </p>
+      </div>
 
-</body>
+      <div class="row g-4 pb-5">
+        <div class="col-lg-8">
+          <div class="row g-4">
+
+            <!-- Entry Ticket & Quantity -->
+            <div class="col-md-6">
+              <div class="config-panel">
+                <div class="panel-head">
+                  <div class="panel-icon"><i class="fa-solid fa-ticket"></i></div>
+                  <div>
+                    <div class="panel-title">Entry Ticket</div>
+                    <div class="panel-sub">Per person, per day entry</div>
+                  </div>
+                </div>
+
+                <div class="row g-2 mb-3" id="ticketTypeGroup">
+                  <div class="col-6">
+                    <label class="option-card selected d-block" data-value="single" data-price="20">
+                      <input type="radio" name="ticketType" value="single" checked>
+                      <div class="opt-title"><i class="fa-solid fa-user"></i>Single</div>
+                      <div class="opt-price">NRs 20 / person</div>
+                    </label>
+                  </div>
+                  <div class="col-6">
+                    <label class="option-card d-block" data-value="group" data-price="16">
+                      <input type="radio" name="ticketType" value="group">
+                      <div class="opt-title"><i class="fa-solid fa-people-group"></i>Group</div>
+                      <div class="opt-price">NRs 16 / person (5+)</div>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="panel-sub mb-0" style="font-size:.85rem;">Number of Visitors</div>
+                    <div class="panel-sub mb-0" id="qtyNote" style="font-size:.72rem; color:var(--muted);">Fixed at 1 for single entry</div>
+                  </div>
+                  <div class="qty-control disabled" id="qtyControl">
+                    <button type="button" class="qty-btn" id="decQty">−</button>
+                    <span class="qty-val" id="qtyVal">1</span>
+                    <button type="button" class="qty-btn" id="incQty">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Nationality -->
+            <div class="col-md-6">
+              <div class="config-panel">
+                <div class="panel-head">
+                  <div class="panel-icon"><i class="fa-solid fa-passport"></i></div>
+                  <div>
+                    <div class="panel-title">Nationality</div>
+                    <div class="panel-sub">Entry fee varies by category</div>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column gap-2" id="nationalityGroup">
+                  <label class="option-card selected d-block" data-value="nepali" data-multiplier="1">
+                    <input type="radio" name="nationality" value="nepali" checked>
+                    <div class="opt-title"><i class="fa-solid fa-flag"></i>Nepali Citizen</div>
+                    <div class="opt-price">NRs 20 / person / day</div>
+                  </label>
+                  <label class="option-card d-block" data-value="saarc" data-multiplier="10">
+                    <input type="radio" name="nationality" value="saarc">
+                    <div class="opt-title"><i class="fa-solid fa-earth-asia"></i>SAARC National</div>
+                    <div class="opt-price">NRs 200 / person / day</div>
+                  </label>
+                  <label class="option-card d-block" data-value="other" data-multiplier="25">
+                    <input type="radio" name="nationality" value="other">
+                    <div class="opt-title"><i class="fa-solid fa-earth-americas"></i>Other / Foreign</div>
+                    <div class="opt-price">NRs 500 / person / day</div>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vehicle -->
+            <div class="col-md-6">
+              <div class="config-panel">
+                <div class="panel-head">
+                  <div class="panel-icon"><i class="fa-solid fa-route"></i></div>
+                  <div>
+                    <div class="panel-title">Vehicle</div>
+                    <div class="panel-sub">Optional — for vehicle entry permit</div>
+                  </div>
+                </div>
+
+                <div class="d-flex flex-column gap-2" id="vehicleGroup">
+                  <label class="option-card d-block" data-value="none" data-price="0">
+                    <input type="radio" name="vehicle" value="none" checked>
+                    <div class="opt-title"><i class="fa-solid fa-person-walking"></i>No Vehicle</div>
+                    <div class="opt-price">On foot</div>
+                  </label>
+                  <label class="option-card d-block" data-value="2wheeler" data-price="50">
+                    <input type="radio" name="vehicle" value="2wheeler">
+                    <div class="opt-title"><i class="fa-solid fa-motorcycle"></i>2-Wheeler</div>
+                    <div class="opt-price">NRs 50 / vehicle</div>
+                  </label>
+                  <label class="option-card d-block" data-value="4wheeler" data-price="200">
+                    <input type="radio" name="vehicle" value="4wheeler">
+                    <div class="opt-title"><i class="fa-solid fa-car"></i>4-Wheeler / Jeep</div>
+                    <div class="opt-price">NRs 200 / vehicle</div>
+                  </label>
+                  <label class="option-card d-block" data-value="minibus" data-price="500">
+                    <input type="radio" name="vehicle" value="minibus">
+                    <div class="opt-title"><i class="fa-solid fa-bus"></i>Minibus / Bus</div>
+                    <div class="opt-price">NRs 500 / vehicle</div>
+                  </label>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                  <div>
+                    <div class="panel-sub mb-0" style="font-size:.85rem;">Number of Vehicles</div>
+                    <div class="panel-sub mb-0" id="vehicleQtyNote" style="font-size:.72rem; color:var(--muted);">Select a vehicle type to enable</div>
+                  </div>
+                  <div class="qty-control disabled" id="vehicleQtyControl">
+                    <button type="button" class="qty-btn" id="decVehicleQty">−</button>
+                    <span class="qty-val" id="vehicleQtyVal">1</span>
+                    <button type="button" class="qty-btn" id="incVehicleQty">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activities & Permits -->
+            <div class="col-md-6">
+              <div class="config-panel">
+                <div class="panel-head">
+                  <div class="panel-icon"><i class="fa-solid fa-stamp"></i></div>
+                  <div>
+                    <div class="panel-title">Activities &amp; Permits</div>
+                    <div class="panel-sub">Select all that apply</div>
+                  </div>
+                </div>
+
+                <label class="permit-check" data-price="500">
+                  <div class="pc-left">
+                    <div class="pc-icon"><i class="fa-solid fa-truck-monster"></i></div>
+                    <div>
+                      <div class="pc-name">Jeep Safari</div>
+                      <div class="pc-price">NRs 500 / vehicle · Buffer zone wildlife drive</div>
+                    </div>
+                  </div>
+                  <div class="pc-right">
+                    <div class="permit-qty" data-for="jeepsafari">
+                      <button type="button" class="permit-qty-btn permit-dec" data-target="jeepsafari">−</button>
+                      <span class="permit-qty-val" id="qty_jeepsafari">1</span>
+                      <button type="button" class="permit-qty-btn permit-inc" data-target="jeepsafari">+</button>
+                    </div>
+                    <input class="form-check-input permit-input" type="checkbox" value="jeepsafari">
+                  </div>
+                </label>
+
+                <label class="permit-check" data-price="150">
+                  <div class="pc-left">
+                    <div class="pc-icon"><i class="fa-solid fa-person-hiking"></i></div>
+                    <div>
+                      <div class="pc-name">Jungle Walk</div>
+                      <div class="pc-price">NRs 150 / person · Guided nature trail</div>
+                    </div>
+                  </div>
+                  <div class="pc-right">
+                    <div class="permit-qty" data-for="junglewalk">
+                      <button type="button" class="permit-qty-btn permit-dec" data-target="junglewalk">−</button>
+                      <span class="permit-qty-val" id="qty_junglewalk">1</span>
+                      <button type="button" class="permit-qty-btn permit-inc" data-target="junglewalk">+</button>
+                    </div>
+                    <input class="form-check-input permit-input" type="checkbox" value="junglewalk">
+                  </div>
+                </label>
+
+                <label class="permit-check" data-price="200">
+                  <div class="pc-left">
+                    <div class="pc-icon"><i class="fa-solid fa-dove"></i></div>
+                    <div>
+                      <div class="pc-name">Bird Watching</div>
+                      <div class="pc-price">NRs 200 / person · 250+ recorded species</div>
+                    </div>
+                  </div>
+                  <div class="pc-right">
+                    <div class="permit-qty" data-for="birdwatch">
+                      <button type="button" class="permit-qty-btn permit-dec" data-target="birdwatch">−</button>
+                      <span class="permit-qty-val" id="qty_birdwatch">1</span>
+                      <button type="button" class="permit-qty-btn permit-inc" data-target="birdwatch">+</button>
+                    </div>
+                    <input class="form-check-input permit-input" type="checkbox" value="birdwatch">
+                  </div>
+                </label>
+
+                <label class="permit-check" data-price="300">
+                  <div class="pc-left">
+                    <div class="pc-icon"><i class="fa-solid fa-water"></i></div>
+                    <div>
+                      <div class="pc-name">River / Boating Safari</div>
+                      <div class="pc-price">NRs 300 / person · Rapti &amp; Babai rivers</div>
+                    </div>
+                  </div>
+                  <div class="pc-right">
+                    <div class="permit-qty" data-for="boating">
+                      <button type="button" class="permit-qty-btn permit-dec" data-target="boating">−</button>
+                      <span class="permit-qty-val" id="qty_boating">1</span>
+                      <button type="button" class="permit-qty-btn permit-inc" data-target="boating">+</button>
+                    </div>
+                    <input class="form-check-input permit-input" type="checkbox" value="boating">
+                  </div>
+                </label>
+
+                <label class="permit-check" data-price="1500">
+                  <div class="pc-left">
+                    <div class="pc-icon"><i class="fa-solid fa-camera-retro"></i></div>
+                    <div>
+                      <div class="pc-name">Photography Permit</div>
+                      <div class="pc-price">NRs 1,500 / camera · Commercial &amp; DSLR</div>
+                    </div>
+                  </div>
+                  <div class="pc-right">
+                    <div class="permit-qty" data-for="photography">
+                      <button type="button" class="permit-qty-btn permit-dec" data-target="photography">−</button>
+                      <span class="permit-qty-val" id="qty_photography">1</span>
+                      <button type="button" class="permit-qty-btn permit-inc" data-target="photography">+</button>
+                    </div>
+                    <input class="form-check-input permit-input" type="checkbox" value="photography">
+                  </div>
+                </label>
+
+                <label class="permit-check mb-0" data-price="500">
+                  <div class="pc-left">
+                    <div class="pc-icon"><i class="fa-solid fa-campground"></i></div>
+                    <div>
+                      <div class="pc-name">Camping Permit</div>
+                      <div class="pc-price">NRs 500 / night · Designated zones only</div>
+                    </div>
+                  </div>
+                  <div class="pc-right">
+                    <div class="permit-qty" data-for="camping">
+                      <button type="button" class="permit-qty-btn permit-dec" data-target="camping">−</button>
+                      <span class="permit-qty-val" id="qty_camping">1</span>
+                      <button type="button" class="permit-qty-btn permit-inc" data-target="camping">+</button>
+                    </div>
+                    <input class="form-check-input permit-input" type="checkbox" value="camping">
+                  </div>
+                </label>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="col-lg-4">
+          <div class="summary-panel">
+            <h5>Booking Summary</h5>
+
+            <div class="summary-line"><span>Ticket Type</span><span class="amt" id="sumTicketType">Single</span></div>
+            <div class="summary-line"><span>Visitors</span><span class="amt" id="sumQty">1</span></div>
+            <div class="summary-line"><span>Nationality</span><span class="amt" id="sumNationality">Nepali Citizen</span></div>
+            <div class="summary-line"><span>Vehicle</span><span class="amt" id="sumVehicle">No Vehicle</span></div>
+            <div class="summary-line"><span>Activities Selected</span><span class="amt" id="sumPermits">None</span></div>
+
+            <div class="summary-total-row">
+              <span class="ttl-label">Estimated Total</span>
+              <span class="ttl-amt" id="sumTotal">NRs 20</span>
+            </div>
+
+            <button type="button" class="btn btn-gold mt-3">
+              <i class="fa-solid fa-circle-check me-2"></i>Review &amp; Book
+            </button>
+            <div class="summary-empty-note">No payment is taken until you confirm in the next step</div>
+          </div>
+        </div>
+      </div>
+      <!-- =================== END BOOKING CONFIGURATOR =================== -->
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="container">
+        <hr style="border-color:#2a3a2c; margin:0 0 16px;">
+        <div class="text-center" style="font-size:.85rem;">&copy; 2026 ParkScape. All rights reserved.</div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* BOOKING CONFIGURATOR LOGIC */
+
+      function formatNpr(n) {
+        return "NRs " + Math.round(n).toLocaleString("en-IN");
+      }
+
+      let qty = 1;
+      let vehicleQty = 1;
+      let ticketType  = { value: "single", price: 20,  label: "Single" };
+      let nationality = { value: "nepali", multiplier: 1,  label: "Nepali Citizen" };
+      let vehicle     = { value: "none",   price: 0,   label: "No Vehicle" };
+      let permits     = [];
+
+      const permitMeta = {
+        jeepsafari:  { label: "Jeep Safari",          price: 500,  perPerson: false, qty: 1 },
+        junglewalk:  { label: "Jungle Walk",           price: 150,  perPerson: true,  qty: 1 },
+        birdwatch:   { label: "Bird Watching",         price: 200,  perPerson: true,  qty: 1 },
+        boating:     { label: "River/Boating Safari",  price: 300,  perPerson: true,  qty: 1 },
+        photography: { label: "Photography Permit",    price: 1500, perPerson: false, qty: 1 },
+        camping:     { label: "Camping Permit",        price: 500,  perPerson: false, qty: 1 },
+      };
+
+      document.querySelectorAll(".permit-qty-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const key = btn.dataset.target;
+          const meta = permitMeta[key];
+          if (btn.classList.contains("permit-inc")) {
+            if (meta.qty < 20) meta.qty++;
+          } else {
+            if (meta.qty > 1) meta.qty--;
+          }
+          document.getElementById("qty_" + key).textContent = meta.qty;
+          updatePermits();
+        });
+      });
+
+      function setupOptionGroup(groupId, onSelect) {
+        const group = document.getElementById(groupId);
+        const cards = group.querySelectorAll(".option-card");
+        cards.forEach((card) => {
+          card.addEventListener("click", () => {
+            cards.forEach((c) => c.classList.remove("selected"));
+            card.classList.add("selected");
+            const input = card.querySelector("input");
+            input.checked = true;
+            onSelect(card);
+          });
+        });
+      }
+
+      setupOptionGroup("ticketTypeGroup", (card) => {
+        ticketType = {
+          value: card.dataset.value,
+          price: parseFloat(card.dataset.price),
+          label: card.querySelector(".opt-title").textContent.trim(),
+        };
+        toggleQtyControl();
+        updateSummary();
+      });
+
+      setupOptionGroup("nationalityGroup", (card) => {
+        nationality = {
+          value: card.dataset.value,
+          multiplier: parseFloat(card.dataset.multiplier),
+          label: card.querySelector(".opt-title").textContent.trim(),
+        };
+        updateSummary();
+      });
+
+      setupOptionGroup("vehicleGroup", (card) => {
+        vehicle = {
+          value: card.dataset.value,
+          price: parseFloat(card.dataset.price),
+          label: card.querySelector(".opt-title").textContent.trim(),
+        };
+        toggleVehicleQtyControl();
+        updateSummary();
+      });
+
+      document.querySelectorAll(".permit-check").forEach((row) => {
+        const input = row.querySelector(".permit-input");
+        row.addEventListener("click", (e) => {
+          if (e.target.closest(".permit-qty-btn")) return;
+          if (e.target !== input) {
+            input.checked = !input.checked;
+          }
+          row.classList.toggle("checked", input.checked);
+          updatePermits();
+        });
+      });
+
+      function updatePermits() {
+        permits = [];
+        document.querySelectorAll(".permit-input:checked").forEach((cb) => {
+          const meta = permitMeta[cb.value];
+          permits.push({ name: cb.value, label: meta.label, price: meta.price, perPerson: meta.perPerson, qty: meta.qty });
+        });
+        updateSummary();
+      }
+
+      const qtyVal     = document.getElementById("qtyVal");
+      const qtyControl = document.getElementById("qtyControl");
+      const qtyNote    = document.getElementById("qtyNote");
+
+      function toggleQtyControl() {
+        if (ticketType.value === "group") {
+          qtyControl.classList.remove("disabled");
+          qtyNote.textContent = "Minimum 5 visitors for group rate";
+          if (qty < 2) { qty = 2; qtyVal.textContent = qty; }
+        } else {
+          qtyControl.classList.add("disabled");
+          qty = 1;
+          qtyVal.textContent = qty;
+          qtyNote.textContent = "Fixed at 1 for single entry";
+        }
+      }
+
+      document.getElementById("incQty").addEventListener("click", () => {
+        if (ticketType.value !== "group") return;
+        if (qty < 50) { qty++; qtyVal.textContent = qty; updateSummary(); }
+      });
+      document.getElementById("decQty").addEventListener("click", () => {
+        if (ticketType.value !== "group") return;
+        if (qty > 2) { qty--; qtyVal.textContent = qty; updateSummary(); }
+      });
+
+      const vehicleQtyVal     = document.getElementById("vehicleQtyVal");
+      const vehicleQtyControl = document.getElementById("vehicleQtyControl");
+      const vehicleQtyNote    = document.getElementById("vehicleQtyNote");
+
+      function toggleVehicleQtyControl() {
+        if (vehicle.value === "none") {
+          vehicleQtyControl.classList.add("disabled");
+          vehicleQty = 1;
+          vehicleQtyVal.textContent = vehicleQty;
+          vehicleQtyNote.textContent = "Select a vehicle type to enable";
+        } else {
+          vehicleQtyControl.classList.remove("disabled");
+          vehicleQtyNote.textContent = "How many vehicles are entering";
+        }
+      }
+
+      document.getElementById("incVehicleQty").addEventListener("click", () => {
+        if (vehicle.value === "none") return;
+        if (vehicleQty < 20) { vehicleQty++; vehicleQtyVal.textContent = vehicleQty; updateSummary(); }
+      });
+      document.getElementById("decVehicleQty").addEventListener("click", () => {
+        if (vehicle.value === "none") return;
+        if (vehicleQty > 1) { vehicleQty--; vehicleQtyVal.textContent = vehicleQty; updateSummary(); }
+      });
+
+      function computeTotal() {
+        const entryTotal   = ticketType.price * nationality.multiplier * qty;
+        const vehicleTotal = vehicle.price * vehicleQty;
+        const permitsTotal = permits.reduce((sum, p) => sum + (p.perPerson ? p.price * qty * p.qty : p.price * p.qty), 0);
+        return { entryTotal, vehicleTotal, permitsTotal, total: entryTotal + vehicleTotal + permitsTotal };
+      }
+
+      function updateSummary() {
+        document.getElementById("sumTicketType").textContent  = ticketType.label;
+        document.getElementById("sumQty").textContent         = qty;
+        document.getElementById("sumNationality").textContent = nationality.label;
+        document.getElementById("sumVehicle").textContent     =
+          vehicle.value === "none" ? vehicle.label : `${vehicle.label} × ${vehicleQty}`;
+
+        const { permitsTotal } = computeTotal();
+        document.getElementById("sumPermits").textContent =
+          permits.length > 0
+            ? permits.map((p) => p.label.split(" ")[0] + (p.qty > 1 ? ` x${p.qty}` : "")).join(", ") + ` (${formatNpr(permitsTotal)})`
+            : "None";
+
+        const { total } = computeTotal();
+        document.getElementById("sumTotal").textContent = formatNpr(total);
+      }
+
+      toggleQtyControl();
+      toggleVehicleQtyControl();
+      updateSummary();
+    </script>
+  </body>
 </html>

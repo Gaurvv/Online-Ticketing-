@@ -18,19 +18,21 @@
     --muted:#6b7568;
   }
   *{box-sizing:border-box;}
-  body{
+body{
     font-family:'Inter',sans-serif;
     background:var(--sand);
     color:var(--text-dark);
     margin:0;
-  }
+
+    padding-top:88px;   /* same as iframe height */
+}
   h1,h2,h3,.brand{font-family:'Playfair Display',serif;}
 
   /* Navbar */
   .navbar-custom{
     background:var(--forest-dark);
-    padding:16px 0;
-  }
+    padding:21px 0;
+}
   .navbar-custom .brand{
     color:#fff;
     font-weight:700;
@@ -168,11 +170,12 @@
     min-height:62px;
   }
   .park-meta{
-    display:flex;
+   
     justify-content:space-between;
     align-items:center;
     border-top:1px solid #efece0;
     padding-top:14px;
+    
   }
   .park-rating{
     color:var(--gold);
@@ -209,12 +212,13 @@
   }
   .stat-label{color:#cdd6c8; font-size:.95rem;}
 
-  footer{
+footer{
     background:#00853C;
     color:#aab4a4;
-    padding:36px 0 18px;
+    padding:60px 0 18px;
+    margin-top:60px;
     font-size:.9rem;
-  }
+}
   footer a{color:#cdd6c8; text-decoration:none;}
   footer a:hover{color:var(--gold);}
   .footer-brand{color:#fff; font-weight:700; font-family:'Playfair Display',serif; font-size:1.3rem;}
@@ -227,9 +231,20 @@
 <body>
 
 <!-- Navbar (loaded from NavBar.html) -->
-<iframe src="NavBar.html" title="Navbar" scrolling="no"
-  style="width:100%; border:0; display:block; height:88px;"
-  onload="this.style.height = (this.contentWindow.document.body.scrollHeight) + 'px';">
+<iframe
+    src="NavBar.html"
+    title="Navbar"
+    scrolling="no"
+    style="
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:88px;
+        border:none;
+        z-index:9999;
+        background:#00853C;
+    ">
 </iframe>
 
 <!-- Hero -->
@@ -299,7 +314,7 @@
         </div>
       </div>
     </div> -->
-    <hr style="border-color:#2a3a2c; margin:28px 0 16px;">
+    <hr style="border-color:#2a3a2c; margin:28px 0 16px ;">
     <div class="text-center" style="font-size:.85rem;">&copy; 2026 ParkScape. All rights reserved.</div>
   </div>
 </footer>
@@ -308,10 +323,30 @@
 <script>
 // Only 4 national parks, 4 per row (col-lg-3)
 const parks = [
-  {id:"Shivapuri.html", name:"Shivapuri Nagarjun National Park",   location:"Kathmandu Valley", desc:"A protected area known for lush forests, wildlife, hiking trails.", img:"https://www.nomadadventuretreks.com/wp-content/uploads/2025/08/Bardia-National-Park-Tour.webp"},
-  {id:"ChitwanPark.html", name:"Chitwan National Park", location:"Chitwan district.",  desc:"A protected area famous for wildlife, jungle safaris, and one-horned rhinoceroses.", img:"https://images.openai.com/static-rsc-4/3XlTH6ZE9plp3Rw5yh39_TrrQ6Ph3216jCgt2e7sT2y7fMbIq1Q86Ni4Y7Iaewd45H7Xlw_xpfjpUkr4wQCdam9R6vRZqPN24Cw5AAO36QIzAG3OTcC-FFCVos24VYCiEkGiX9mksUahQI3afTE0fgC2dhfq2SmfGuHKgeUY8V87gxUorTybigpx8jLMEJJQ?purpose=fullsize"},
-  {id:"Banke.html", name:"Banke National Park", location:"Khairi, Banke District",desc:"A protected area known for Bengal tigers, elephants, dense forests, and diverse wildlife.", img:"https://images.openai.com/static-rsc-4/b0rwlx0dU1_6MEnzY8YnhHiOnfNKhhkPJsxEmaD9ddRexSbRxyWoeqz5b9N_2A01ukATeJao5fdQYyDNd2AMQiPbXzMR_EX0MpnYyIKG_ZcqJGT6DbZi4C0uRtinYNcjexRy_J42YtqFluCRU-ZjrJCRSbEiOQLJEzNLAlKVXQ4jN0IqsrkR-IQUSHQznVDC?purpose=fullsize"},
-  {id:"Langtang.html", name:"Langtang National Park", location:"Dhunche, Rasuwa District",  desc:"A protected area known for Himalayan landscapes, glaciers, alpine forests, and rare wildlife.", img:"https://images.openai.com/static-rsc-4/1gdBCrzhMFpKlpgiSzugjRieU1gWbqsV9PmJSF4_GfA5xFg0jysJfHOty268Wsu0TZQ2zwEdm4_ESfXT-TKw-4UwuvsGItaXhEDQwavjbSlPIpFX91GONFM9r_YoP4Hu-wIUB--znEZ3Pi0s4tjZt6I6v2hibq5GLQ8HhyAxiNLGnM-yYhU2NQaQsnnFvzhB?purpose=fullsize"}
+  {
+    id:"Shivapuri.html", 
+    name:"Shivapuri Nagarjun National Park",   
+    location:"Kathmandu Valley",
+    desc:"A protected area known for lush forests, wildlife, hiking trails.", 
+    img:"https://www.nomadadventuretreks.com/wp-content/uploads/2025/08/Bardia-National-Park-Tour.webp"},
+  {
+    id:"ChitwanPark.html",
+     name:"Chitwan National Park", 
+     location:"Chitwan district.",
+       desc:"A protected area famous for wildlife, jungle safaris, and one-horned rhinoceroses.", 
+       img:"https://images.openai.com/static-rsc-4/3XlTH6ZE9plp3Rw5yh39_TrrQ6Ph3216jCgt2e7sT2y7fMbIq1Q86Ni4Y7Iaewd45H7Xlw_xpfjpUkr4wQCdam9R6vRZqPN24Cw5AAO36QIzAG3OTcC-FFCVos24VYCiEkGiX9mksUahQI3afTE0fgC2dhfq2SmfGuHKgeUY8V87gxUorTybigpx8jLMEJJQ?purpose=fullsize"},
+  {
+    id:"Banke.html",
+     name:"Banke National Park", 
+     location:"Khairi, Banke District",
+     desc:"A protected area known for Bengal tigers, elephants, dense forests, and diverse wildlife.", 
+     img:"https://images.openai.com/static-rsc-4/b0rwlx0dU1_6MEnzY8YnhHiOnfNKhhkPJsxEmaD9ddRexSbRxyWoeqz5b9N_2A01ukATeJao5fdQYyDNd2AMQiPbXzMR_EX0MpnYyIKG_ZcqJGT6DbZi4C0uRtinYNcjexRy_J42YtqFluCRU-ZjrJCRSbEiOQLJEzNLAlKVXQ4jN0IqsrkR-IQUSHQznVDC?purpose=fullsize"},
+  {
+    id:"Langtang.html",
+     name:"Langtang National Park",
+      location:"Dhunche, Rasuwa District", 
+       desc:"A protected area known for Himalayan landscapes, glaciers, alpine forests, and rare wildlife.",
+        img:"https://images.openai.com/static-rsc-4/1gdBCrzhMFpKlpgiSzugjRieU1gWbqsV9PmJSF4_GfA5xFg0jysJfHOty268Wsu0TZQ2zwEdm4_ESfXT-TKw-4UwuvsGItaXhEDQwavjbSlPIpFX91GONFM9r_YoP4Hu-wIUB--znEZ3Pi0s4tjZt6I6v2hibq5GLQ8HhyAxiNLGnM-yYhU2NQaQsnnFvzhB?purpose=fullsize"}
 ];
 
 const container = document.getElementById('parkContainer');
@@ -327,11 +362,10 @@ container.innerHTML = parks.map(park => `
       <div class="park-body">
         <div class="park-title">${park.name}</div>
         <div class="park-loc"><i class="fa-solid fa-location-dot"></i>${park.location}</div>
-        <div class="park-desc">${park.desc}</div>
-        <div class="park-meta">
-         
-          <a  class="btn btn-explore"   href=${park.id}>View Details</a>
-        </div>
+      <!--  <div class="park-desc">${park.desc}</div> --> 
+     <div class="park-meta d-flex justify-content-center">
+    <a class="btn btn-explore" href="${park.id}">View Details</a>
+</div>
       </div>
     </div>
   </div>
