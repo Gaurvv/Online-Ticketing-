@@ -3,22 +3,432 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Booking Form</title>
+<title>Book Your Visit | Shivapuri Nagarjun National Park</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --forest-dark:#00853C;
+    --forest:#00853C;
+    --forest-light:#5b8a5a;
+    --sand:#f4f1e8;
+    --gold:#c8973a;
+    --text-dark:#1f2a22;
+    --muted:#6b7568;
+    --line:#e7e3d6;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0; padding:0;}
   body{
-    margin:0;
     font-family:'Inter',sans-serif;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    height:100vh;
-    color:#6b7568;
+    color:var(--text-dark);
     background:#fff;
   }
+  .form-wrap{
+    padding:26px 30px 30px;
+  }
+  .context-strip{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--sand);
+    border-radius:12px;
+    padding:12px 16px;
+    margin-bottom:22px;
+  }
+  .context-strip i{color:var(--forest); font-size:1rem;}
+  .context-strip .ctx-park{
+    font-weight:700;
+    font-size:.95rem;
+    color:var(--text-dark);
+  }
+  .context-strip .ctx-activity{
+    font-size:.82rem;
+    color:var(--muted);
+  }
+
+  .field-group{margin-bottom:18px;}
+  label.field-label{
+    display:block;
+    font-size:.8rem;
+    font-weight:600;
+    color:var(--text-dark);
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    margin-bottom:7px;
+  }
+  .form-control, .form-select{
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:.92rem;
+    width:100%;
+    font-family:'Inter',sans-serif;
+    color:var(--text-dark);
+    background:#fff;
+  }
+  .form-control:focus, .form-select:focus{
+    outline:none;
+    border-color:var(--forest);
+    box-shadow:0 0 0 3px rgba(0,133,60,.12);
+  }
+  textarea.form-control{resize:vertical; min-height:80px;}
+
+  .row-2{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .row-3{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:16px;
+  }
+  @media (max-width:560px){
+    .row-2, .row-3{grid-template-columns:1fr;}
+  }
+
+  fieldset{border:none; padding:0; margin:0 0 22px;}
+  legend{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--forest-dark);
+    margin-bottom:14px;
+    padding:0;
+  }
+
+  /* Visitor category pricing table */
+  .visitor-row{
+    display:grid;
+    grid-template-columns:1.6fr .9fr .7fr .9fr;
+    gap:12px;
+    align-items:center;
+    padding:11px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .visitor-row:last-child{border-bottom:none;}
+  .visitor-row .vr-label{font-weight:600; font-size:.88rem;}
+  .visitor-row .vr-sub{font-size:.76rem; color:var(--muted); display:block; margin-top:1px;}
+  .visitor-row .vr-fee{font-size:.85rem; color:var(--muted); text-align:right;}
+  .qty-input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:8px 10px;
+    text-align:center;
+    font-size:.9rem;
+  }
+  .visitor-head{
+    display:grid;
+    grid-template-columns:1.6fr .9fr .7fr .9fr;
+    gap:12px;
+    font-size:.74rem;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    color:var(--muted);
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+  @media (max-width:560px){
+    .visitor-row, .visitor-head{grid-template-columns:1.4fr .8fr .6fr;}
+    .visitor-head span:last-child, .visitor-row .vr-line-total{display:none;}
+  }
+  .vr-line-total{font-weight:700; font-size:.88rem; text-align:right; color:var(--text-dark);}
+
+  .summary-box{
+    background:var(--sand);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-top:6px;
+  }
+  .summary-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:.88rem;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .summary-total{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding-top:10px;
+    margin-top:6px;
+    border-top:1px solid #e3dfcf;
+  }
+  .summary-total .label{font-weight:700; color:var(--text-dark); font-size:.95rem;}
+  .summary-total .amount{
+    font-family:'Playfair Display',serif;
+    font-weight:800;
+    font-size:1.5rem;
+    color:var(--forest-dark);
+  }
+
+  .check-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:.84rem;
+    color:var(--muted);
+    margin-top:16px;
+  }
+  .check-row input{margin-top:3px;}
+
+  .btn-submit{
+    background:var(--gold);
+    border:none;
+    color:#fff;
+    padding:13px 0;
+    width:100%;
+    font-weight:700;
+    font-size:.95rem;
+    border-radius:30px;
+    margin-top:18px;
+    transition:.2s;
+    cursor:pointer;
+  }
+  .btn-submit:hover{background:#b3812f;}
+  .btn-submit:disabled{background:#d8cdb4; cursor:not-allowed;}
+
+  .note{
+    font-size:.76rem;
+    color:var(--muted);
+    margin-top:10px;
+    text-align:center;
+  }
+
+  /* Confirmation state */
+  .confirm-screen{
+    display:none;
+    text-align:center;
+    padding:40px 20px;
+  }
+  .confirm-screen.show{display:block;}
+  .confirm-screen .icon{
+    width:64px; height:64px;
+    border-radius:50%;
+    background:rgba(0,133,60,.1);
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 16px;
+  }
+  .confirm-screen .icon i{color:var(--forest); font-size:1.6rem;}
+  .confirm-screen h3{font-size:1.3rem; margin-bottom:8px;}
+  .confirm-screen p{color:var(--muted); font-size:.9rem; max-width:380px; margin:0 auto;}
+  .confirm-ref{
+    display:inline-block;
+    margin-top:16px;
+    background:var(--sand);
+    padding:8px 16px;
+    border-radius:8px;
+    font-weight:700;
+    color:var(--forest-dark);
+    letter-spacing:.5px;
+    font-size:.85rem;
+  }
+
+  #bookingFormScreen.hide{display:none;}
 </style>
 </head>
 <body>
-  <!-- Replace this file's content with the actual booking form -->
-  <p>Booking form goes here.</p>
+
+<div class="form-wrap">
+
+  <div id="bookingFormScreen">
+
+    <div class="context-strip">
+      <i class="fa-solid fa-mountain"></i>
+      <div>
+        <div class="ctx-park" id="ctxPark">Shivapuri Nagarjun National Park</div>
+        <div class="ctx-activity" id="ctxActivity">General Entry</div>
+      </div>
+    </div>
+
+    <form id="shivapuriForm">
+
+      <fieldset>
+        <legend>Visit Details</legend>
+        <div class="row-2">
+          <div class="field-group">
+            <label class="field-label" for="visitDate">Visit date</label>
+            <input type="date" id="visitDate" class="form-control" required>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="entryGate">Entry gate</label>
+            <select id="entryGate" class="form-select">
+              <option value="Sundarijal Gate">Sundarijal Gate</option>
+              <option value="Panimuhan Gate">Panimuhan Gate</option>
+              <option value="Mulkharka Gate">Mulkharka Gate</option>
+              <option value="Bagdwar Gate">Bagdwar Gate</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Visitor Details</legend>
+        <div class="field-group">
+          <label class="field-label" for="fullName">Full name</label>
+          <input type="text" id="fullName" class="form-control" placeholder="As on your ID or passport" required>
+        </div>
+        <div class="row-2">
+          <div class="field-group">
+            <label class="field-label" for="email">Email address</label>
+            <input type="email" id="email" class="form-control" placeholder="you@example.com" required>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="phone">Phone number</label>
+            <input type="tel" id="phone" class="form-control" placeholder="98XXXXXXXX" required>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Entry Tickets</legend>
+        <div class="visitor-head">
+          <span>Category</span>
+          <span>Fee (NPR)</span>
+          <span>Qty</span>
+          <span style="text-align:right;">Subtotal</span>
+        </div>
+
+        <div class="visitor-row" data-fee="100">
+          <div>
+            <span class="vr-label">Nepali citizen</span>
+            <span class="vr-sub">Citizenship card required at entry</span>
+          </div>
+          <div class="vr-fee">NPR 100</div>
+          <input type="number" min="0" value="0" class="qty-input" data-qty>
+          <div class="vr-line-total" data-line>NPR 0</div>
+        </div>
+
+        <div class="visitor-row" data-fee="1500">
+          <div>
+            <span class="vr-label">SAARC national</span>
+            <span class="vr-sub">Valid passport required</span>
+          </div>
+          <div class="vr-fee">NPR 1,500</div>
+          <input type="number" min="0" value="0" class="qty-input" data-qty>
+          <div class="vr-line-total" data-line>NPR 0</div>
+        </div>
+
+        <div class="visitor-row" data-fee="3000">
+          <div>
+            <span class="vr-label">Foreign national</span>
+            <span class="vr-sub">Valid passport required</span>
+          </div>
+          <div class="vr-fee">NPR 3,000</div>
+          <input type="number" min="0" value="1" class="qty-input" data-qty>
+          <div class="vr-line-total" data-line>NPR 3,000</div>
+        </div>
+
+        <div class="visitor-row" data-fee="0">
+          <div>
+            <span class="vr-label">Child (under 10)</span>
+            <span class="vr-sub">Free entry, ID may be requested</span>
+          </div>
+          <div class="vr-fee">Free</div>
+          <input type="number" min="0" value="0" class="qty-input" data-qty>
+          <div class="vr-line-total" data-line>NPR 0</div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Special Requests <span style="font-weight:400; font-size:.78rem; color:var(--muted); font-family:'Inter',sans-serif;">(optional)</span></legend>
+        <div class="field-group" style="margin-bottom:0;">
+          <textarea id="notes" class="form-control" placeholder="Guided tour, accessibility needs, group details, etc."></textarea>
+        </div>
+      </fieldset>
+
+      <div class="summary-box">
+        <div class="summary-row">
+          <span id="summaryVisitorsLabel">Total visitors</span>
+          <span id="summaryVisitorsCount">1</span>
+        </div>
+        <div class="summary-row">
+          <span>Activity</span>
+          <span id="summaryActivity">General Entry</span>
+        </div>
+        <div class="summary-total">
+          <span class="label">Total payable</span>
+          <span class="amount" id="summaryTotal">NPR 3,000</span>
+        </div>
+      </div>
+
+      <div class="check-row">
+        <input type="checkbox" id="agreeTerms" required>
+        <label for="agreeTerms">I confirm the details above are accurate and agree to the park's entry rules, including carrying valid ID for the selected visitor categories.</label>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Confirm Booking</button>
+      <p class="note">Payment is collected at the entry gate on arrival. Tickets are non-transferable.</p>
+    </form>
+  </div>
+
+  <div class="confirm-screen" id="confirmScreen">
+    <div class="icon"><i class="fa-solid fa-check"></i></div>
+    <h3>Booking confirmed</h3>
+    <p>A confirmation has been sent to your email. Show your reference code at the entry gate along with valid ID.</p>
+    <div class="confirm-ref" id="confirmRef">SNP-000000</div>
+  </div>
+
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const park = params.get('park') || 'Shivapuri Nagarjun National Park';
+  const activity = params.get('activity') || 'General Entry';
+
+  document.getElementById('ctxPark').textContent = park;
+  document.getElementById('ctxActivity').textContent = activity;
+  document.getElementById('summaryActivity').textContent = activity;
+
+  // Minimum visit date = today
+  const dateInput = document.getElementById('visitDate');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.min = today;
+  dateInput.value = today;
+
+  const visitorRows = Array.from(document.querySelectorAll('.visitor-row'));
+
+  function formatNPR(n){
+    return 'NPR ' + n.toLocaleString('en-IN');
+  }
+
+  function recalc(){
+    let total = 0;
+    let count = 0;
+    visitorRows.forEach(row => {
+      const fee = parseInt(row.dataset.fee, 10);
+      const qtyInput = row.querySelector('[data-qty]');
+      let qty = parseInt(qtyInput.value, 10);
+      if (isNaN(qty) || qty < 0) qty = 0;
+      qtyInput.value = qty;
+      const lineTotal = fee * qty;
+      row.querySelector('[data-line]').textContent = formatNPR(lineTotal);
+      total += lineTotal;
+      count += qty;
+    });
+    document.getElementById('summaryTotal').textContent = formatNPR(total);
+    document.getElementById('summaryVisitorsCount').textContent = count;
+    document.getElementById('summaryVisitorsLabel').textContent =
+      count === 1 ? 'Total visitor' : 'Total visitors';
+    document.getElementById('submitBtn').disabled = count === 0;
+  }
+
+  visitorRows.forEach(row => {
+    row.querySelector('[data-qty]').addEventListener('input', recalc);
+  });
+  recalc();
+
+  document.getElementById('shivapuriForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const ref = 'SNP-' + Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('confirmRef').textContent = ref;
+    document.getElementById('bookingFormScreen').classList.add('hide');
+    document.getElementById('confirmScreen').classListadd('show');
+  });
+</script>
+
 </body>
 </html>
