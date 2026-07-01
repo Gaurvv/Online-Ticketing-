@@ -380,12 +380,6 @@
       </div>
 
       <div class="row g-4 pb-3" id="activityContainer"></div>
-
-      <!-- <div class="text-center mt-2 mb-5">
-    <button type="button" class="btn btn-gold" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
-      <i class="fa-solid fa-ticket me-2"></i>Book Ticket
-    </button>
-  </div> -->
     </div>
 
     <!-- Book Ticket Popup -->
@@ -422,6 +416,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script>
+      const PARK_NAME = "Shivapuri Nagarjun National Park";
+
       const activities = [
         {
           name: "Forest Hiking Trails",
@@ -458,7 +454,7 @@
       <div class="activity-body">
         <div class="activity-title">${act.name}</div>
         <div class="activity-desc">${act.desc}</div>
-        <button type="button" class="btn btn-book-now" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
+        <button type="button" class="btn btn-book-now" data-bs-toggle="modal" data-bs-target="#bookTicketModal" data-activity="${act.name}">
           Book Now
         </button>
       </div>
@@ -467,6 +463,19 @@
 `,
         )
         .join("");
+
+      // Pass which activity was clicked into the single shared booking form
+      const bookTicketModal = document.getElementById("bookTicketModal");
+      const bookingFrame = bookTicketModal.querySelector(".booking-form-frame");
+
+      bookTicketModal.addEventListener("show.bs.modal", (event) => {
+        const triggerBtn = event.relatedTarget;
+        const activity = triggerBtn
+          ? triggerBtn.getAttribute("data-activity")
+          : "General Entry";
+        const params = new URLSearchParams({ park: PARK_NAME, activity: activity });
+        bookingFrame.src = `ShivapuriForm.html?${params.toString()}`;
+      });
     </script>
   </body>
 </html>
