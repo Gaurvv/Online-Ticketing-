@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Book Your Visit | Chitwan Nagarjun National Park</title>
+<title>Book Your Visit | Shivapuri Nagarjun National Park</title>
 
 <!--
   LARAVEL INTEGRATION NOTES (for backend dev):
@@ -304,7 +304,7 @@
     <div class="context-strip">
       <i class="fa-solid fa-mountain"></i>
       <div>
-        <div class="ctx-park" id="ctxPark">Chitwan Nagarjun National Park</div>
+        <div class="ctx-park" id="ctxPark">Shivapuri Nagarjun National Park</div>
         <div class="ctx-activity" id="ctxActivity">General Entry</div>
       </div>
     </div>
@@ -315,13 +315,13 @@
       Native form action/method are kept as a no-JS fallback pointing at a Laravel route.
       If JS is enabled (normal case), submit is intercepted and sent as JSON via fetch().
     -->
-    <form id="chitwanForm" action="{{ route('bookings.store') }}" method="POST" novalidate>
+    <form id="shivapuriForm" action="{{ route('bookings.store') }}" method="POST" novalidate>
 
       <!-- Laravel CSRF fallback for non-JS / native POST -->
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
       <!-- Context fields, submitted alongside visitor/ticket data -->
-      <input type="hidden" name="park" id="parkField" value="Chitwan Nagarjun National Park">
+      <input type="hidden" name="park" id="parkField" value="Shivapuri Nagarjun National Park">
       <input type="hidden" name="activity" id="activityField" value="General Entry">
       <input type="hidden" name="total_visitors" id="totalVisitorsField" value="0">
       <input type="hidden" name="total_amount" id="totalAmountField" value="0">
@@ -335,12 +335,12 @@
             <div class="field-error" data-error-for="visit_date">Please select a valid visit date.</div>
           </div>
           <div class="field-group">
-            <label class="field-label" for="entryGate">Entry gate</label>
+            <label class="field-label" for="entryGate">Entry Points</label>
             <select id="entryGate" name="entry_gate" class="form-select">
-              <option value="Kasara Gate">Kasara Gate</option>
-              <option value="Sauraha Gate">Sauraha Gate</option>
-              <option value="Amaltari Gate">Amaltari Gate</option>
-              <option value="Sunachuri Gate">Sunachuri Gate</option>
+              <option value="">Kasara Gate</option>
+              <option value="">Sauraha Gate</option>
+              <option value="">Amaltari Gate</option>
+              <option value="">Sunachuri Gate</option>
             </select>
           </div>
         </div>
@@ -521,7 +521,7 @@
 (function(){
   // ---- URL context (park / activity passed via query string) ----
   const params = new URLSearchParams(window.location.search);
-  const park = params.get('park') || 'Chitwan Nagarjun National Park';
+  const park = params.get('park') || 'Shivapuri Nagarjun National Park';
   const activity = params.get('activity') || 'General Entry';
 
   document.getElementById('ctxPark').textContent = park;
@@ -537,7 +537,7 @@
   dateInput.value = today;
 
   const visitorRows = Array.from(document.querySelectorAll('.visitor-row'));
-  const form = document.getElementById('chitwanForm');
+  const form = document.getElementById('shivapuriForm');
   const submitBtn = document.getElementById('submitBtn');
   const formAlert = document.getElementById('formAlert');
 
