@@ -61,19 +61,35 @@
         position: relative;
         height: 65vh;
         min-height: 420px;
-        background:
-          linear-gradient(
-            180deg,
-            rgba(15, 30, 18, 0.35) 0%,
-            rgba(15, 30, 18, 0.8) 100%
-          ),
-          url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr4HbsFY9g_ER1RxcAJCDDt0qLUVjHCg0i0W-tVpb6Zg&s=10")
-            center/cover no-repeat;
+        width: 100%;
+        overflow: hidden;
         display: flex;
         align-items: flex-end;
         color: #fff;
+        background: #0c2113; /* fallback while image loads */
+      }
+      .park-hero .hero-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 42%;
+        image-rendering: -webkit-optimize-contrast;
+      }
+      .park-hero .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 30, 18, 0.15) 0%,
+          rgba(15, 30, 18, 0.35) 45%,
+          rgba(15, 30, 18, 0.88) 100%
+        );
       }
       .park-hero .container {
+        position: relative;
+        z-index: 2;
         padding-bottom: 48px;
       }
       .park-hero .badge-continent {
@@ -195,13 +211,19 @@
       }
       .activity-img-wrap {
         position: relative;
-        height: 180px;
+        width: 100%;
+        aspect-ratio: 4 / 3;
         overflow: hidden;
+        background: var(--sand);
       }
       .activity-img-wrap img {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
+        display: block;
         transition: transform 0.5s ease;
       }
       .activity-card:hover .activity-img-wrap img {
@@ -363,6 +385,13 @@
 
     <!-- Park Hero -->
     <section class="park-hero">
+      <img
+        class="hero-img"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0X-JPeSD8GinQZF3SRtUhDLrNczmhP9vKFqoX6yM0Q113fll99z00Hv6E&s=10"
+        alt="Sal forest and grassland landscape at Banke National Park"
+        loading="eager"
+      />
+      <div class="hero-overlay"></div>
       <div class="container">
         <h1>Banke National Park</h1>
         <div class="loc">
@@ -379,7 +408,7 @@
       <div class="text-center mt-5" id="activities">
         <h2 class="section-title">Book Tickets</h2>
         <p class="section-sub">
-          Book Tickets to experience Top activities at Shivapuri Nagarjun
+          Book Tickets to experience Top activities at Banke
         </p>
       </div>
 
@@ -403,7 +432,7 @@
         <div class="modal-content">
           <div class="modal-header booking-header">
             <h5 class="modal-title">
-              Book Your Visit – Shivapuri Nagarjun National Park
+              Book Your Visit – Banke National Park
             </h5>
             <button
               type="button"
