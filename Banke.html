@@ -61,19 +61,35 @@
         position: relative;
         height: 65vh;
         min-height: 420px;
-        background:
-          linear-gradient(
-            180deg,
-            rgba(15, 30, 18, 0.35) 0%,
-            rgba(15, 30, 18, 0.8) 100%
-          ),
-          url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr4HbsFY9g_ER1RxcAJCDDt0qLUVjHCg0i0W-tVpb6Zg&s=10")
-            center/cover no-repeat;
+        width: 100%;
+        overflow: hidden;
         display: flex;
         align-items: flex-end;
         color: #fff;
+        background: #0c2113; /* fallback while image loads */
+      }
+      .park-hero .hero-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 42%;
+        image-rendering: -webkit-optimize-contrast;
+      }
+      .park-hero .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(15, 30, 18, 0.15) 0%,
+          rgba(15, 30, 18, 0.35) 45%,
+          rgba(15, 30, 18, 0.88) 100%
+        );
       }
       .park-hero .container {
+        position: relative;
+        z-index: 2;
         padding-bottom: 48px;
       }
       .park-hero .badge-continent {
@@ -195,13 +211,19 @@
       }
       .activity-img-wrap {
         position: relative;
-        height: 180px;
+        width: 100%;
+        aspect-ratio: 4 / 3;
         overflow: hidden;
+        background: var(--sand);
       }
       .activity-img-wrap img {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
+        display: block;
         transition: transform 0.5s ease;
       }
       .activity-card:hover .activity-img-wrap img {
@@ -363,6 +385,13 @@
 
     <!-- Park Hero -->
     <section class="park-hero">
+      <img
+        class="hero-img"
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0X-JPeSD8GinQZF3SRtUhDLrNczmhP9vKFqoX6yM0Q113fll99z00Hv6E&s=10"
+        alt="Sal forest and grassland landscape at Banke National Park"
+        loading="eager"
+      />
+      <div class="hero-overlay"></div>
       <div class="container">
         <h1>Banke National Park</h1>
         <div class="loc">
@@ -379,7 +408,7 @@
       <div class="text-center mt-5" id="activities">
         <h2 class="section-title">Book Tickets</h2>
         <p class="section-sub">
-          Book Tickets to experience Top activities at Shivapuri Nagarjun
+          Book Tickets to experience Top activities at Banke
         </p>
       </div>
 
@@ -403,7 +432,7 @@
         <div class="modal-content">
           <div class="modal-header booking-header">
             <h5 class="modal-title">
-              Book Your Visit – Shivapuri Nagarjun National Park
+              Book Your Visit – Banke National Park
             </h5>
             <button
               type="button"
@@ -442,41 +471,26 @@
     <script>
       const activities = [
         {
-          name: "Jungle Safari",
+          name: "Jeep Safari",
           // desc: "Trek through dense subtropical and pine forests across well-marked trails suited for all skill levels.",
-          img: "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80",
+          img: "https://tigerencounter.com/wp-content/uploads/2022/07/Four-Nights-Five-Days-Jungle-Safari-in-Bardia-National-Park.jpg",
         },
         {
-          name: "Jeep Safari",
+          name: "Bird Watching",
           // desc: "Spot over 300 bird species including Himalayan eagles, sunbirds, and forktails along the river trails.",
           img: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=800&q=80",
         },
         {
-          name: "Canoe Ride",
+          name: "Wildlife Photography",
           // desc: "Look out for leopards, Himalayan black bears, langurs, and barking deer in their natural habitat.",
-          img: "https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=800&q=80",
+          img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcjvUygK6njjDD3HV2JaXCqxArqhCy6CgNcpTigluSzg&s=10",
         },
         {
-          name: "Bird Watching",
+          name: "Guided Nature Walk",
           // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
-          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
+          img: "",
         },
-          {
-          name: "Crocodile Viewing",
-          // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
-          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-        },
-          {
-          name: "Elephant Breeding Center   ",
-          // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
-          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-        },
-          {
-          name: "Wildlife Photography",
-          // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
-          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
-        },
-        
+          
       ];
 
       const activityContainer = document.getElementById("activityContainer");
