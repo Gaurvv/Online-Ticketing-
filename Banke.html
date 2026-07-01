@@ -3,13 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Banke National Park | ParkScape</title>
+    <title>Chitwan national Park</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css"
       rel="stylesheet"
     />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -27,51 +31,61 @@
         margin: 0;
         padding: 0;
       }
-      html, body {
-        height: 100%;
-      }
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background: var(--sand);
-        color: var(--text-dark);
-        display: flex;
-        flex-direction: column;
+     body{
+    font-family:"Inter",sans-serif;
+    background:var(--sand);
+    color:var(--text-dark);
+    padding-top:88px;
+}
+      h1,
+      h2,
+      h3,
+      .brand {
+        font-family: "Playfair Display", serif;
       }
 
-      iframe.nav-frame {
-        width: 100%;
-        height: 88px;
-        border: none;
-        display: block;
-        flex: 0 0 auto;
-        position: relative;
-        z-index: 10;
-      }
+    iframe.nav-frame{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 88px;
+    border: none;
+    display: block;
+    z-index: 9999;
+    background: #00853C;
+}
 
       /* Hero */
       .park-hero {
         position: relative;
         height: 65vh;
         min-height: 420px;
-        width: 100%;
-        background-image:
+        background:
           linear-gradient(
             180deg,
-            rgba(15, 30, 18, 0.05) 0%,
-            rgba(15, 30, 18, 0.15) 45%,
-            rgba(15, 30, 18, 0.82) 100%
+            rgba(15, 30, 18, 0.35) 0%,
+            rgba(15, 30, 18, 0.8) 100%
           ),
-          url("https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Bardiya_National_Park.jpg/1280px-Bardiya_National_Park.jpg");
-        background-size: cover;
-        background-position: center 40%;
-        background-repeat: no-repeat;
+          url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQr4HbsFY9g_ER1RxcAJCDDt0qLUVjHCg0i0W-tVpb6Zg&s=10")
+            center/cover no-repeat;
         display: flex;
         align-items: flex-end;
         color: #fff;
-        z-index: 1;
       }
       .park-hero .container {
         padding-bottom: 48px;
+      }
+      .park-hero .badge-continent {
+        background: rgba(72, 255, 157, 0.85);
+        color: #fff;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        display: inline-block;
+        margin-bottom: 14px;
       }
       .park-hero h1 {
         font-size: 2.8rem;
@@ -105,325 +119,235 @@
         margin-bottom: 36px;
       }
 
-      /* ===== Booking Configurator ===== */
-      .config-panel {
+      /* Ticket Booking section */
+      .ticket-section {
         background: #fff;
         border-radius: 18px;
         box-shadow: 0 6px 18px rgba(28, 56, 41, 0.08);
         border: 1px solid #ece9dd;
-        padding: 26px 26px 24px;
-        height: 100%;
+        padding: 32px;
+        margin-top: -60px;
+        position: relative;
+        z-index: 5;
       }
-      .config-panel .panel-head {
+      .ticket-info-item {
         display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 20px;
+        align-items: flex-start;
+        gap: 14px;
       }
-      .config-panel .panel-icon {
-        width: 44px;
-        height: 44px;
-        min-width: 44px;
-        border-radius: 12px;
+      .ticket-info-item .icon-circle {
+        width: 46px;
+        height: 46px;
+        min-width: 46px;
+        border-radius: 50%;
         background: rgba(0, 133, 60, 0.1);
-        color: var(--forest);
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+      .ticket-info-item .icon-circle i {
+        color: var(--forest);
         font-size: 1.1rem;
       }
-      .config-panel .panel-title {
+      .ticket-info-item .label {
+        font-size: 0.8rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 2px;
+      }
+      .ticket-info-item .value {
         font-weight: 700;
         font-size: 1.05rem;
         color: var(--text-dark);
-      }
-      .config-panel .panel-sub {
-        font-size: 0.78rem;
-        color: var(--muted);
-      }
-
-      .option-card {
-        position: relative;
-        border: 1.5px solid #e0ded3;
-        border-radius: 12px;
-        padding: 12px 14px;
-        cursor: pointer;
-        transition: 0.2s;
-        background: #fff;
-      }
-      .option-card:hover {
-        border-color: var(--forest-light);
-      }
-      .option-card input {
-        position: absolute;
-        opacity: 0;
-        inset: 0;
-        margin: 0;
-        cursor: pointer;
-      }
-      .option-card .opt-title {
-        font-weight: 600;
-        font-size: 0.92rem;
-        color: var(--text-dark);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-      .option-card .opt-title i {
-        color: var(--forest);
-      }
-      .option-card .opt-price {
-        font-size: 0.8rem;
-        color: var(--muted);
-        margin-top: 2px;
-      }
-      .option-card.selected {
-        border-color: var(--forest);
-        background: rgba(0, 133, 60, 0.06);
-        box-shadow: 0 0 0 1px var(--forest);
-      }
-      .option-card.selected .opt-title {
-        color: var(--forest-dark);
-      }
-      .option-card.selected::after {
-        content: "\f00c";
-        font-family: "Font Awesome 6 Free";
-        font-weight: 900;
-        position: absolute;
-        top: 10px;
-        right: 12px;
-        color: var(--forest);
-        font-size: 0.78rem;
-      }
-
-      .qty-control {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        background: var(--sand);
-        border-radius: 30px;
-        padding: 6px 8px;
-        width: fit-content;
-        transition: opacity 0.2s;
-      }
-      .qty-control.disabled {
-        opacity: 0.45;
-        pointer-events: none;
-      }
-      .qty-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: none;
-        background: var(--forest);
-        color: #fff;
-        font-weight: 700;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: 0.2s;
-      }
-      .qty-btn:hover {
-        background: var(--forest-dark);
-      }
-      .qty-btn:disabled {
-        background: #c9d4cb;
-        cursor: not-allowed;
-      }
-      .qty-val {
-        min-width: 22px;
-        text-align: center;
-        font-weight: 700;
-        font-size: 1rem;
-      }
-
-      .permit-check {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border: 1.5px solid #e0ded3;
-        border-radius: 12px;
-        padding: 12px 14px;
-        margin-bottom: 10px;
-        cursor: pointer;
-        transition: 0.2s;
-      }
-      .permit-check:hover {
-        border-color: var(--forest-light);
-      }
-      .permit-check.checked {
-        border-color: var(--gold);
-        background: rgba(200, 151, 58, 0.07);
-      }
-      .permit-check .pc-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      .permit-check .pc-icon {
-        width: 38px;
-        height: 38px;
-        min-width: 38px;
-        border-radius: 50%;
-        background: rgba(200, 151, 58, 0.15);
-        color: var(--gold);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.95rem;
-      }
-      .permit-check .pc-name {
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: var(--text-dark);
-      }
-      .permit-check .pc-price {
-        font-size: 0.78rem;
-        color: var(--muted);
-      }
-      .permit-check .form-check-input {
-        width: 1.15em;
-        height: 1.15em;
-        cursor: pointer;
-      }
-      .permit-check .pc-right {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-      }
-      .permit-qty {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--sand);
-        border-radius: 30px;
-        padding: 4px 6px;
-        opacity: 0;
-        pointer-events: none;
-        transform: scale(0.95);
-        transition: 0.18s;
-      }
-      .permit-check.checked .permit-qty {
-        opacity: 1;
-        pointer-events: auto;
-        transform: scale(1);
-      }
-      .permit-qty-btn {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        border: 1px solid #d6d2c4;
-        background: transparent;
-        color: var(--text-dark);
-        font-weight: 700;
-        line-height: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 0.85rem;
-        transition: 0.2s;
-      }
-      .permit-qty-btn:hover {
-        background: #ece9dd;
-      }
-      .permit-qty-val {
-        min-width: 16px;
-        text-align: center;
-        font-weight: 700;
-        font-size: 0.85rem;
-      }
-
-      .summary-panel {
-        background: linear-gradient(150deg, var(--forest-dark), #0c5f2c);
-        border-radius: 18px;
-        padding: 26px 24px;
-        color: #fff;
-        position: sticky;
-        top: 20px;
-      }
-      .summary-panel h5 {
-        font-weight: 700;
-        margin-bottom: 18px;
-      }
-      .summary-line {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.86rem;
-        color: #dcebe0;
-        padding: 7px 0;
-        border-bottom: 1px dashed rgba(255, 255, 255, 0.18);
-      }
-      .summary-line span.amt {
-        color: #fff;
-        font-weight: 600;
-      }
-      .summary-total-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 16px;
-        padding-top: 14px;
-        border-top: 1px solid rgba(255, 255, 255, 0.25);
-      }
-      .summary-total-row .ttl-label {
-        font-size: 0.92rem;
-        color: #dcebe0;
-      }
-      .summary-total-row .ttl-amt {
-        font-size: 1.8rem;
-        font-weight: 800;
-        color: var(--gold);
       }
       .btn-gold {
         background: var(--gold);
         border: none;
         color: #fff;
-        padding: 13px 0;
-        font-weight: 700;
+        padding: 13px 34px;
+        font-weight: 600;
         border-radius: 30px;
         transition: 0.25s;
         font-size: 1rem;
-        width: 100%;
       }
       .btn-gold:hover {
         background: #b3812f;
         color: #fff;
         transform: translateY(-2px);
       }
-      .summary-empty-note {
-        font-size: 0.78rem;
-        color: #c3d6c8;
+
+      /* Activity Card (same theme as park-card) */
+      .activity-card {
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(28, 56, 41, 0.08);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+        height: 100%;
+        border: 1px solid #ece9dd;
+      }
+      .activity-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 34px rgba(83, 176, 126, 0.18);
+      }
+      .activity-img-wrap {
+        position: relative;
+        height: 180px;
+        overflow: hidden;
+      }
+      .activity-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .activity-card:hover .activity-img-wrap img {
+        transform: scale(1.08);
+      }
+      .activity-body {
+        padding: 18px 18px 20px;
+      }
+      .activity-title {
+        font-weight: 700;
+        font-size: 1.02rem;
+        margin-bottom: 6px;
+        color: var(--text-dark);
+      }
+      .activity-desc {
+        font-size: 0.86rem;
+        color: #4f5750;
+        min-height: 58px;
+        margin-bottom: 16px;
+      }
+      .btn-book-now {
+        background: transparent;
+        border: 1.5px solid var(--forest);
+        color: var(--forest);
+        font-weight: 600;
+        font-size: 0.82rem;
+        padding: 8px 16px;
+        border-radius: 24px;
+        transition: 0.2s;
+        width: 100%;
+      }
+      .btn-book-now:hover {
+        background: var(--forest);
+        color: #fff;
+      }
+
+      /* Book Ticket CTA button under cards */
+      .btn-explore {
+        background: transparent;
+        border: 1.5px solid var(--forest);
+        color: var(--forest);
+        font-weight: 600;
+        font-size: 0.82rem;
+        padding: 7px 16px;
+        border-radius: 24px;
+        transition: 0.2s;
+      }
+      .btn-explore:hover {
+        background: var(--forest);
+        color: #fff;
+      }
+
+      /* Booking popup modal */
+      .modal-content {
+        border-radius: 20px;
+        overflow: hidden;
+        border: none;
+      }
+      .modal-header.booking-header {
+        background: var(--forest-dark);
+        color: #fff;
+        border-bottom: none;
+        padding: 24px 28px;
+      }
+      .modal-header.booking-header .modal-title {
+        font-family: "Playfair Display", serif;
+        font-weight: 700;
+      }
+      .modal-header.booking-header .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+      }
+      .modal-body.booking-body {
+        padding: 28px;
+      }
+      .modal-body.booking-form-body {
+        padding: 0;
+      }
+      .booking-form-frame {
+        width: 100%;
+        height: 520px;
+        border: none;
+        display: block;
+      }
+      .booking-park-name {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text-dark);
+        margin-bottom: 4px;
+      }
+      .booking-park-loc {
+        color: var(--muted);
+        font-size: 0.88rem;
+        margin-bottom: 20px;
+      }
+      .booking-park-loc i {
+        color: var(--forest-light);
+        margin-right: 5px;
+      }
+      .booking-price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--sand);
+        border-radius: 12px;
+        padding: 14px 18px;
+        margin-bottom: 22px;
+      }
+      .booking-price-row .label {
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      .booking-price-row .price {
+        font-weight: 800;
+        font-size: 1.3rem;
+        color: var(--forest-dark);
+        font-family: "Playfair Display", serif;
+      }
+      .modal-footer.booking-footer {
+        border-top: none;
+        padding: 0 28px 28px;
+      }
+      .btn-continue {
+        background: var(--gold);
+        border: none;
+        color: #fff;
+        padding: 12px 28px;
+        font-weight: 600;
+        border-radius: 30px;
+        width: 100%;
         text-align: center;
-        margin-top: 10px;
-      }
-
-      footer {
-        background: #00853c;
-        color: #aab4a4;
-        padding: 36px 0 18px;
-        font-size: 0.9rem;
-        margin-top: 60px;
-      }
-      footer a {
-        color: #cdd6c8;
         text-decoration: none;
+        display: block;
+        transition: 0.2s;
       }
-      footer a:hover {
-        color: var(--gold);
+      .btn-continue:hover {
+        background: #b3812f;
+        color: #fff;
       }
 
-      @media (max-width: 991px) {
-        .summary-panel {
-          position: static;
-          margin-top: 24px;
-        }
-      }
       @media (max-width: 767px) {
         .park-hero h1 {
           font-size: 1.9rem;
+        }
+        .ticket-section {
+          margin-top: -30px;
+          padding: 22px;
         }
       }
     </style>
@@ -442,491 +366,126 @@
       <div class="container">
         <h1>Banke National Park</h1>
         <div class="loc">
-          <i class="fa-solid fa-location-dot"></i>Lumbini Province, Nepal
+          <i class="fa-solid fa-location-dot"></i>Khairi, Banke District
         </div>
         <p class="desc">
-          Nepal's tenth national park and a key Tiger Conservation Unit, spanning 550 km²
-          of Terai Sal forests, Churia ranges and the floodplains of the Rapti and Babai
-          rivers — home to Bengal tigers, four-horned antelope, striped hyenas, gharial
-          crocodiles and over 250 species of birds.
+        Known for Bengal tigers, dense forests, and diverse wildlife.
         </p>
       </div>
     </section>
 
     <div class="container">
-      <!-- ===================== BOOKING CONFIGURATOR ===================== -->
-      <div class="text-center mt-5 mb-4">
-        <h2 class="section-title">Customize Your Visit</h2>
+      <!-- Activities -->
+      <div class="text-center mt-5" id="activities">
+        <h2 class="section-title">Book Tickets</h2>
         <p class="section-sub">
-          Choose your entry type, transport, nationality and activities — then review and confirm
+          Book Tickets to experience Top activities at Shivapuri Nagarjun
         </p>
       </div>
 
-      <div class="row g-4 pb-5">
-        <div class="col-lg-8">
-          <div class="row g-4">
+      <div class="row g-4 pb-3" id="activityContainer"></div>
 
-            <!-- Entry Ticket & Quantity -->
-            <div class="col-md-6">
-              <div class="config-panel">
-                <div class="panel-head">
-                  <div class="panel-icon"><i class="fa-solid fa-ticket"></i></div>
-                  <div>
-                    <div class="panel-title">Entry Ticket</div>
-                    <div class="panel-sub">Per person, per day entry</div>
-                  </div>
-                </div>
-
-                <div class="row g-2 mb-3" id="ticketTypeGroup">
-                  <div class="col-6">
-                    <label class="option-card selected d-block" data-value="single" data-price="20">
-                      <input type="radio" name="ticketType" value="single" checked>
-                      <div class="opt-title"><i class="fa-solid fa-user"></i>Single</div>
-                      <div class="opt-price">NRs 20 / person</div>
-                    </label>
-                  </div>
-                  <div class="col-6">
-                    <label class="option-card d-block" data-value="group" data-price="16">
-                      <input type="radio" name="ticketType" value="group">
-                      <div class="opt-title"><i class="fa-solid fa-people-group"></i>Group</div>
-                      <div class="opt-price">NRs 16 / person (5+)</div>
-                    </label>
-                  </div>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="panel-sub mb-0" style="font-size:.85rem;">Number of Visitors</div>
-                    <div class="panel-sub mb-0" id="qtyNote" style="font-size:.72rem; color:var(--muted);">Fixed at 1 for single entry</div>
-                  </div>
-                  <div class="qty-control disabled" id="qtyControl">
-                    <button type="button" class="qty-btn" id="decQty">−</button>
-                    <span class="qty-val" id="qtyVal">1</span>
-                    <button type="button" class="qty-btn" id="incQty">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Nationality -->
-            <div class="col-md-6">
-              <div class="config-panel">
-                <div class="panel-head">
-                  <div class="panel-icon"><i class="fa-solid fa-passport"></i></div>
-                  <div>
-                    <div class="panel-title">Nationality</div>
-                    <div class="panel-sub">Entry fee varies by category</div>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-column gap-2" id="nationalityGroup">
-                  <label class="option-card selected d-block" data-value="nepali" data-multiplier="1">
-                    <input type="radio" name="nationality" value="nepali" checked>
-                    <div class="opt-title"><i class="fa-solid fa-flag"></i>Nepali Citizen</div>
-                    <div class="opt-price">NRs 20 / person / day</div>
-                  </label>
-                  <label class="option-card d-block" data-value="saarc" data-multiplier="10">
-                    <input type="radio" name="nationality" value="saarc">
-                    <div class="opt-title"><i class="fa-solid fa-earth-asia"></i>SAARC National</div>
-                    <div class="opt-price">NRs 200 / person / day</div>
-                  </label>
-                  <label class="option-card d-block" data-value="other" data-multiplier="25">
-                    <input type="radio" name="nationality" value="other">
-                    <div class="opt-title"><i class="fa-solid fa-earth-americas"></i>Other / Foreign</div>
-                    <div class="opt-price">NRs 500 / person / day</div>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- Vehicle -->
-            <div class="col-md-6">
-              <div class="config-panel">
-                <div class="panel-head">
-                  <div class="panel-icon"><i class="fa-solid fa-route"></i></div>
-                  <div>
-                    <div class="panel-title">Vehicle</div>
-                    <div class="panel-sub">Optional — for vehicle entry permit</div>
-                  </div>
-                </div>
-
-                <div class="d-flex flex-column gap-2" id="vehicleGroup">
-                  <label class="option-card d-block" data-value="none" data-price="0">
-                    <input type="radio" name="vehicle" value="none" checked>
-                    <div class="opt-title"><i class="fa-solid fa-person-walking"></i>No Vehicle</div>
-                    <div class="opt-price">On foot</div>
-                  </label>
-                  <label class="option-card d-block" data-value="2wheeler" data-price="50">
-                    <input type="radio" name="vehicle" value="2wheeler">
-                    <div class="opt-title"><i class="fa-solid fa-motorcycle"></i>2-Wheeler</div>
-                    <div class="opt-price">NRs 50 / vehicle</div>
-                  </label>
-                  <label class="option-card d-block" data-value="4wheeler" data-price="200">
-                    <input type="radio" name="vehicle" value="4wheeler">
-                    <div class="opt-title"><i class="fa-solid fa-car"></i>4-Wheeler / Jeep</div>
-                    <div class="opt-price">NRs 200 / vehicle</div>
-                  </label>
-                  <label class="option-card d-block" data-value="minibus" data-price="500">
-                    <input type="radio" name="vehicle" value="minibus">
-                    <div class="opt-title"><i class="fa-solid fa-bus"></i>Minibus / Bus</div>
-                    <div class="opt-price">NRs 500 / vehicle</div>
-                  </label>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-3">
-                  <div>
-                    <div class="panel-sub mb-0" style="font-size:.85rem;">Number of Vehicles</div>
-                    <div class="panel-sub mb-0" id="vehicleQtyNote" style="font-size:.72rem; color:var(--muted);">Select a vehicle type to enable</div>
-                  </div>
-                  <div class="qty-control disabled" id="vehicleQtyControl">
-                    <button type="button" class="qty-btn" id="decVehicleQty">−</button>
-                    <span class="qty-val" id="vehicleQtyVal">1</span>
-                    <button type="button" class="qty-btn" id="incVehicleQty">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Activities & Permits -->
-            <div class="col-md-6">
-              <div class="config-panel">
-                <div class="panel-head">
-                  <div class="panel-icon"><i class="fa-solid fa-stamp"></i></div>
-                  <div>
-                    <div class="panel-title">Activities &amp; Permits</div>
-                    <div class="panel-sub">Select all that apply</div>
-                  </div>
-                </div>
-
-                <label class="permit-check" data-price="500">
-                  <div class="pc-left">
-                    <div class="pc-icon"><i class="fa-solid fa-truck-monster"></i></div>
-                    <div>
-                      <div class="pc-name">Jeep Safari</div>
-                      <div class="pc-price">NRs 500 / vehicle · Buffer zone wildlife drive</div>
-                    </div>
-                  </div>
-                  <div class="pc-right">
-                    <div class="permit-qty" data-for="jeepsafari">
-                      <button type="button" class="permit-qty-btn permit-dec" data-target="jeepsafari">−</button>
-                      <span class="permit-qty-val" id="qty_jeepsafari">1</span>
-                      <button type="button" class="permit-qty-btn permit-inc" data-target="jeepsafari">+</button>
-                    </div>
-                    <input class="form-check-input permit-input" type="checkbox" value="jeepsafari">
-                  </div>
-                </label>
-
-                <label class="permit-check" data-price="150">
-                  <div class="pc-left">
-                    <div class="pc-icon"><i class="fa-solid fa-person-hiking"></i></div>
-                    <div>
-                      <div class="pc-name">Jungle Walk</div>
-                      <div class="pc-price">NRs 150 / person · Guided nature trail</div>
-                    </div>
-                  </div>
-                  <div class="pc-right">
-                    <div class="permit-qty" data-for="junglewalk">
-                      <button type="button" class="permit-qty-btn permit-dec" data-target="junglewalk">−</button>
-                      <span class="permit-qty-val" id="qty_junglewalk">1</span>
-                      <button type="button" class="permit-qty-btn permit-inc" data-target="junglewalk">+</button>
-                    </div>
-                    <input class="form-check-input permit-input" type="checkbox" value="junglewalk">
-                  </div>
-                </label>
-
-                <label class="permit-check" data-price="200">
-                  <div class="pc-left">
-                    <div class="pc-icon"><i class="fa-solid fa-dove"></i></div>
-                    <div>
-                      <div class="pc-name">Bird Watching</div>
-                      <div class="pc-price">NRs 200 / person · 250+ recorded species</div>
-                    </div>
-                  </div>
-                  <div class="pc-right">
-                    <div class="permit-qty" data-for="birdwatch">
-                      <button type="button" class="permit-qty-btn permit-dec" data-target="birdwatch">−</button>
-                      <span class="permit-qty-val" id="qty_birdwatch">1</span>
-                      <button type="button" class="permit-qty-btn permit-inc" data-target="birdwatch">+</button>
-                    </div>
-                    <input class="form-check-input permit-input" type="checkbox" value="birdwatch">
-                  </div>
-                </label>
-
-                <label class="permit-check" data-price="300">
-                  <div class="pc-left">
-                    <div class="pc-icon"><i class="fa-solid fa-water"></i></div>
-                    <div>
-                      <div class="pc-name">River / Boating Safari</div>
-                      <div class="pc-price">NRs 300 / person · Rapti &amp; Babai rivers</div>
-                    </div>
-                  </div>
-                  <div class="pc-right">
-                    <div class="permit-qty" data-for="boating">
-                      <button type="button" class="permit-qty-btn permit-dec" data-target="boating">−</button>
-                      <span class="permit-qty-val" id="qty_boating">1</span>
-                      <button type="button" class="permit-qty-btn permit-inc" data-target="boating">+</button>
-                    </div>
-                    <input class="form-check-input permit-input" type="checkbox" value="boating">
-                  </div>
-                </label>
-
-                <label class="permit-check" data-price="1500">
-                  <div class="pc-left">
-                    <div class="pc-icon"><i class="fa-solid fa-camera-retro"></i></div>
-                    <div>
-                      <div class="pc-name">Photography Permit</div>
-                      <div class="pc-price">NRs 1,500 / camera · Commercial &amp; DSLR</div>
-                    </div>
-                  </div>
-                  <div class="pc-right">
-                    <div class="permit-qty" data-for="photography">
-                      <button type="button" class="permit-qty-btn permit-dec" data-target="photography">−</button>
-                      <span class="permit-qty-val" id="qty_photography">1</span>
-                      <button type="button" class="permit-qty-btn permit-inc" data-target="photography">+</button>
-                    </div>
-                    <input class="form-check-input permit-input" type="checkbox" value="photography">
-                  </div>
-                </label>
-
-                <label class="permit-check mb-0" data-price="500">
-                  <div class="pc-left">
-                    <div class="pc-icon"><i class="fa-solid fa-campground"></i></div>
-                    <div>
-                      <div class="pc-name">Camping Permit</div>
-                      <div class="pc-price">NRs 500 / night · Designated zones only</div>
-                    </div>
-                  </div>
-                  <div class="pc-right">
-                    <div class="permit-qty" data-for="camping">
-                      <button type="button" class="permit-qty-btn permit-dec" data-target="camping">−</button>
-                      <span class="permit-qty-val" id="qty_camping">1</span>
-                      <button type="button" class="permit-qty-btn permit-inc" data-target="camping">+</button>
-                    </div>
-                    <input class="form-check-input permit-input" type="checkbox" value="camping">
-                  </div>
-                </label>
-
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="col-lg-4">
-          <div class="summary-panel">
-            <h5>Booking Summary</h5>
-
-            <div class="summary-line"><span>Ticket Type</span><span class="amt" id="sumTicketType">Single</span></div>
-            <div class="summary-line"><span>Visitors</span><span class="amt" id="sumQty">1</span></div>
-            <div class="summary-line"><span>Nationality</span><span class="amt" id="sumNationality">Nepali Citizen</span></div>
-            <div class="summary-line"><span>Vehicle</span><span class="amt" id="sumVehicle">No Vehicle</span></div>
-            <div class="summary-line"><span>Activities Selected</span><span class="amt" id="sumPermits">None</span></div>
-
-            <div class="summary-total-row">
-              <span class="ttl-label">Estimated Total</span>
-              <span class="ttl-amt" id="sumTotal">NRs 20</span>
-            </div>
-
-            <button type="button" class="btn btn-gold mt-3">
-              <i class="fa-solid fa-circle-check me-2"></i>Review &amp; Book
-            </button>
-            <div class="summary-empty-note">No payment is taken until you confirm in the next step</div>
-          </div>
-        </div>
-      </div>
-      <!-- =================== END BOOKING CONFIGURATOR =================== -->
+      <!-- <div class="text-center mt-2 mb-5">
+    <button type="button" class="btn btn-gold" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
+      <i class="fa-solid fa-ticket me-2"></i>Book Ticket
+    </button>
+  </div> -->
     </div>
 
-    <!-- Footer -->
-    <footer id="footer">
-      <div class="container">
-        <hr style="border-color:#2a3a2c; margin:0 0 16px;">
-        <div class="text-center" style="font-size:.85rem;">&copy; 2026 ParkScape. All rights reserved.</div>
+    <!-- Book Ticket Popup -->
+    <div
+      class="modal fade"
+      id="bookTicketModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-header booking-header">
+            <h5 class="modal-title">
+              Book Your Visit – Shivapuri Nagarjun National Park
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body booking-form-body">
+            <!-- Booking form is rendered here from a separate file -->
+       <iframe
+    class="booking-form-frame"
+    src="BookingForm.html"
+></iframe>
+          </div>
+        </div>
       </div>
-    </footer>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script>
-      /* BOOKING CONFIGURATOR LOGIC */
+      const activities = [
+        {
+          name: "Jungle Safari",
+          // desc: "Trek through dense subtropical and pine forests across well-marked trails suited for all skill levels.",
+          img: "https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          name: "Jeep Safari",
+          // desc: "Spot over 300 bird species including Himalayan eagles, sunbirds, and forktails along the river trails.",
+          img: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          name: "Canoe Ride",
+          // desc: "Look out for leopards, Himalayan black bears, langurs, and barking deer in their natural habitat.",
+          img: "https://images.unsplash.com/photo-1549366021-9f761d450615?auto=format&fit=crop&w=800&q=80",
+        },
+        {
+          name: "Bird Watching",
+          // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
+          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
+        },
+          {
+          name: "Crocodile Viewing",
+          // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
+          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
+        },
+          {
+          name: "Elephant Breeding Center   ",
+          // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
+          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
+        },
+          {
+          name: "Wildlife Photography",
+          // desc: "Walk to the sacred source of the Bagmati River, a peaceful spot nestled deep within the park.",
+          img: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80",
+        },
+        
+      ];
 
-      function formatNpr(n) {
-        return "NRs " + Math.round(n).toLocaleString("en-IN");
-      }
+      const activityContainer = document.getElementById("activityContainer");
 
-      let qty = 1;
-      let vehicleQty = 1;
-      let ticketType  = { value: "single", price: 20,  label: "Single" };
-      let nationality = { value: "nepali", multiplier: 1,  label: "Nepali Citizen" };
-      let vehicle     = { value: "none",   price: 0,   label: "No Vehicle" };
-      let permits     = [];
-
-      const permitMeta = {
-        jeepsafari:  { label: "Jeep Safari",          price: 500,  perPerson: false, qty: 1 },
-        junglewalk:  { label: "Jungle Walk",           price: 150,  perPerson: true,  qty: 1 },
-        birdwatch:   { label: "Bird Watching",         price: 200,  perPerson: true,  qty: 1 },
-        boating:     { label: "River/Boating Safari",  price: 300,  perPerson: true,  qty: 1 },
-        photography: { label: "Photography Permit",    price: 1500, perPerson: false, qty: 1 },
-        camping:     { label: "Camping Permit",        price: 500,  perPerson: false, qty: 1 },
-      };
-
-      document.querySelectorAll(".permit-qty-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          const key = btn.dataset.target;
-          const meta = permitMeta[key];
-          if (btn.classList.contains("permit-inc")) {
-            if (meta.qty < 20) meta.qty++;
-          } else {
-            if (meta.qty > 1) meta.qty--;
-          }
-          document.getElementById("qty_" + key).textContent = meta.qty;
-          updatePermits();
-        });
-      });
-
-      function setupOptionGroup(groupId, onSelect) {
-        const group = document.getElementById(groupId);
-        const cards = group.querySelectorAll(".option-card");
-        cards.forEach((card) => {
-          card.addEventListener("click", () => {
-            cards.forEach((c) => c.classList.remove("selected"));
-            card.classList.add("selected");
-            const input = card.querySelector("input");
-            input.checked = true;
-            onSelect(card);
-          });
-        });
-      }
-
-      setupOptionGroup("ticketTypeGroup", (card) => {
-        ticketType = {
-          value: card.dataset.value,
-          price: parseFloat(card.dataset.price),
-          label: card.querySelector(".opt-title").textContent.trim(),
-        };
-        toggleQtyControl();
-        updateSummary();
-      });
-
-      setupOptionGroup("nationalityGroup", (card) => {
-        nationality = {
-          value: card.dataset.value,
-          multiplier: parseFloat(card.dataset.multiplier),
-          label: card.querySelector(".opt-title").textContent.trim(),
-        };
-        updateSummary();
-      });
-
-      setupOptionGroup("vehicleGroup", (card) => {
-        vehicle = {
-          value: card.dataset.value,
-          price: parseFloat(card.dataset.price),
-          label: card.querySelector(".opt-title").textContent.trim(),
-        };
-        toggleVehicleQtyControl();
-        updateSummary();
-      });
-
-      document.querySelectorAll(".permit-check").forEach((row) => {
-        const input = row.querySelector(".permit-input");
-        row.addEventListener("click", (e) => {
-          if (e.target.closest(".permit-qty-btn")) return;
-          if (e.target !== input) {
-            input.checked = !input.checked;
-          }
-          row.classList.toggle("checked", input.checked);
-          updatePermits();
-        });
-      });
-
-      function updatePermits() {
-        permits = [];
-        document.querySelectorAll(".permit-input:checked").forEach((cb) => {
-          const meta = permitMeta[cb.value];
-          permits.push({ name: cb.value, label: meta.label, price: meta.price, perPerson: meta.perPerson, qty: meta.qty });
-        });
-        updateSummary();
-      }
-
-      const qtyVal     = document.getElementById("qtyVal");
-      const qtyControl = document.getElementById("qtyControl");
-      const qtyNote    = document.getElementById("qtyNote");
-
-      function toggleQtyControl() {
-        if (ticketType.value === "group") {
-          qtyControl.classList.remove("disabled");
-          qtyNote.textContent = "Minimum 5 visitors for group rate";
-          if (qty < 2) { qty = 2; qtyVal.textContent = qty; }
-        } else {
-          qtyControl.classList.add("disabled");
-          qty = 1;
-          qtyVal.textContent = qty;
-          qtyNote.textContent = "Fixed at 1 for single entry";
-        }
-      }
-
-      document.getElementById("incQty").addEventListener("click", () => {
-        if (ticketType.value !== "group") return;
-        if (qty < 50) { qty++; qtyVal.textContent = qty; updateSummary(); }
-      });
-      document.getElementById("decQty").addEventListener("click", () => {
-        if (ticketType.value !== "group") return;
-        if (qty > 2) { qty--; qtyVal.textContent = qty; updateSummary(); }
-      });
-
-      const vehicleQtyVal     = document.getElementById("vehicleQtyVal");
-      const vehicleQtyControl = document.getElementById("vehicleQtyControl");
-      const vehicleQtyNote    = document.getElementById("vehicleQtyNote");
-
-      function toggleVehicleQtyControl() {
-        if (vehicle.value === "none") {
-          vehicleQtyControl.classList.add("disabled");
-          vehicleQty = 1;
-          vehicleQtyVal.textContent = vehicleQty;
-          vehicleQtyNote.textContent = "Select a vehicle type to enable";
-        } else {
-          vehicleQtyControl.classList.remove("disabled");
-          vehicleQtyNote.textContent = "How many vehicles are entering";
-        }
-      }
-
-      document.getElementById("incVehicleQty").addEventListener("click", () => {
-        if (vehicle.value === "none") return;
-        if (vehicleQty < 20) { vehicleQty++; vehicleQtyVal.textContent = vehicleQty; updateSummary(); }
-      });
-      document.getElementById("decVehicleQty").addEventListener("click", () => {
-        if (vehicle.value === "none") return;
-        if (vehicleQty > 1) { vehicleQty--; vehicleQtyVal.textContent = vehicleQty; updateSummary(); }
-      });
-
-      function computeTotal() {
-        const entryTotal   = ticketType.price * nationality.multiplier * qty;
-        const vehicleTotal = vehicle.price * vehicleQty;
-        const permitsTotal = permits.reduce((sum, p) => sum + (p.perPerson ? p.price * qty * p.qty : p.price * p.qty), 0);
-        return { entryTotal, vehicleTotal, permitsTotal, total: entryTotal + vehicleTotal + permitsTotal };
-      }
-
-      function updateSummary() {
-        document.getElementById("sumTicketType").textContent  = ticketType.label;
-        document.getElementById("sumQty").textContent         = qty;
-        document.getElementById("sumNationality").textContent = nationality.label;
-        document.getElementById("sumVehicle").textContent     =
-          vehicle.value === "none" ? vehicle.label : `${vehicle.label} × ${vehicleQty}`;
-
-        const { permitsTotal } = computeTotal();
-        document.getElementById("sumPermits").textContent =
-          permits.length > 0
-            ? permits.map((p) => p.label.split(" ")[0] + (p.qty > 1 ? ` x${p.qty}` : "")).join(", ") + ` (${formatNpr(permitsTotal)})`
-            : "None";
-
-        const { total } = computeTotal();
-        document.getElementById("sumTotal").textContent = formatNpr(total);
-      }
-
-      toggleQtyControl();
-      toggleVehicleQtyControl();
-      updateSummary();
+      activityContainer.innerHTML = activities
+        .map(
+          (act) => `
+  <div class="col-lg-3 col-md-6">
+    <div class="activity-card">
+      <div class="activity-img-wrap">
+        <img src="${act.img}" alt="${act.name}" loading="lazy">
+      </div>
+      <div class="activity-body">
+        <div class="activity-title">${act.name}</div>
+       
+        <button type="button" class="btn btn-book-now" data-bs-toggle="modal" data-bs-target="#bookTicketModal">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </div>
+`,
+        )
+        .join("");
     </script>
   </body>
 </html>
